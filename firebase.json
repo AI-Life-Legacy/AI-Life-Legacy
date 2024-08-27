@@ -1,0 +1,296 @@
+{
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ]
+    }
+  ],
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/",
+        "destination": "/home/home.html"
+      },
+      {
+        "source": "/guide",
+        "destination": "/guide/guide.html"
+      },
+      {
+        "source": "/login",
+        "destination": "/login/login.html"
+      },
+      {
+        "source": "/logout",
+        "destination": "/logout/logout.html"
+      },
+      {
+        "source": "/mypage",
+        "destination": "/mypage/mypage.html"
+      },
+      {
+        "source": "/myprofile",
+        "destination": "/myprofile/myprofile.html"
+      },
+      {
+        "source": "/write/1",
+        "destination": "/write1/write.html"
+      },
+      {
+        "source": "/write/2",
+        "destination": "/write2/write.html"
+      },
+      {
+        "source": "/write/3",
+        "destination": "/write3/write.html"
+      },
+      {
+        "source": "/write/4",
+        "destination": "/write4/write.html"
+      },
+      {
+        "source": "/write/5",
+        "destination": "/write5/write.html"
+      },
+      {
+        "source": "/write/6",
+        "destination": "/write6/write.html"
+      },
+      {
+        "source": "/write/7",
+        "destination": "/write7/write.html"
+      },
+      {
+        "source": "/write/8",
+        "destination": "/write8/write.html"
+      },
+      {
+        "source": "/write/9",
+        "destination": "/write9/write.html"
+      },
+      {
+        "source": "/write/10",
+        "destination": "/write10/write.html"
+      },
+      {
+        "source": "/finish",
+        "destination": "/finish/finish.html"
+      },
+      {
+        "source": "/edit/1/1",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/1/2",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/1/3",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/1/4",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/1/5",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/2/1",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/2/2",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/2/3",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/2/4",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/2/5",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/3/1",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/3/2",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/3/3",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/3/4",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/3/5",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/4/1",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/4/2",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/4/3",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/4/4",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/4/5",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/5/1",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/5/2",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/5/3",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/5/4",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/5/5",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/6/1",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/6/2",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/6/3",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/6/4",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/6/5",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/7/1",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/7/2",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/7/3",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/7/4",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/7/5",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/8/1",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/8/2",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/8/3",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/8/4",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/8/5",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/9/1",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/9/2",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/9/3",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/9/4",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/9/5",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/10/1",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/10/2",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/10/3",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/10/4",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/edit/10/5",
+        "destination": "/edit/edit.html"
+      },
+      {
+        "source": "/**",
+        "destination": "/404.html"
+      }
+    ]
+  }
+}

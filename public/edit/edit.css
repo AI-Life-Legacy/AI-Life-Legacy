@@ -1,0 +1,92 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    flex-grow: 1;
+}
+
+.content {
+    flex-grow: 1;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+#answerInput {
+    width: 100%;          /* 너비를 부모 요소에 맞추기 */
+    height: 450px;        /* 높이를 적절한 값으로 설정 */
+    padding: 15px;        /* 내부 여백을 키워 입력 공간 확대 */
+    font-size: 16px;      /* 텍스트 크기를 키워 가독성 향상 */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    display: none;        /* 초기 상태에서는 숨김 */
+    resize: vertical;     /* 사용자가 세로 크기 조절 가능 */
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+button {
+    cursor: pointer;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    flex: 1;
+    box-sizing: border-box;
+    transition: background-color 0.3s;
+}
+
+#prevButton {
+    background-color: #e0e0e0;
+    color: #333;
+    margin-right: 5px; /* 버튼 간의 간격 */
+}
+
+#editButton {
+    background-color: #008CBA;
+    color: white;
+    margin-left: 5px; /* 버튼 간의 간격 */
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+#editButton.edit-mode {
+    background-color: #4CAF50; /* 저장 모드일 때의 색상 */
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 400px;
+    }
+}

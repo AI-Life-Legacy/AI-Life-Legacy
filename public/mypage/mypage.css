@@ -1,0 +1,173 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.header {
+    text-align: left; /* Align the title to the left */
+    padding: 10px;
+    background-color: white; /* 배경색을 흰색으로 변경 */
+    border-bottom: 1px solid #ddd;
+}
+
+.header h1 {
+    font-size: 25px; /* Reduce the size of the title */
+    margin: 0;
+    margin-left: 20px; /* Left margin */
+    margin-top: 20px; /* Top margin */
+    margin-bottom: 20px; /* Bottom margin */
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    flex-grow: 1;
+}
+
+#sections {
+    overflow-y: auto; /* 스크롤 가능하게 함 */
+    flex-grow: 1; /* 남은 공간을 모두 차지하게 함 */
+    margin-bottom: 20px; /* nav바와의 간격 조정 */
+}
+.section {
+    margin: 20px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.question-list {
+    padding: 0;
+    margin: 10px 0;
+}
+
+.question-item {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 5px 0;
+    cursor: pointer;
+    background-color: #fafafa;
+}
+
+.question-item:hover {
+    background-color: #f0f0f0;
+}
+
+.answer-item {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 5px 0 15px 0;
+    background-color: #f9f9f9;
+    display: none;
+}
+.question-content {
+    display: none;
+    margin: 10px 0 10px 20px;
+    font-style: italic;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.navbar {
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    margin-top: auto; /* 네비게이션 바를 하단에 고정 */
+    border-top: 1px solid #ddd; /* 구분선 추가 */
+}
+
+.navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.navbar li {
+    flex: 1;
+    text-align: center;
+}
+
+.navbar a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    color: #333;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.navbar a:hover {
+    background-color: #e8f0fe;
+}
+.answer-item {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 5px 0 15px 0;
+    background-color: #fafafa; /* Match the background color of question-item */
+    display: none; /* Initially hidden */
+    color: #333; /* Text color */
+}
+
+.answer-item.show {
+    display: block; /* Show when this class is added */
+}
+
+.answer-item:hover {
+    background-color: #f0f0f0; /* Optional: add hover effect similar to question-item */
+}
+
+/* Additional optional styles */
+.answer-item .answer-header {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.answer-item .answer-content {
+    margin-top: 5px;
+}
+#loading-message {
+    text-align: center;
+    font-size: 20px;
+    color: #333;
+    margin-top: 20px;
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 400px;
+    }
+}

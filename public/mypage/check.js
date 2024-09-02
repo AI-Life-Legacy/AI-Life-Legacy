@@ -1,17 +1,19 @@
-const idToken = Cookies.get('token');
-if(!idToken){
-  alert("로그인을 해주세요!");
-  window.location.href = "/login";
-}
 document.addEventListener('DOMContentLoaded', async () => {
    // 로그인 및 자서전 제출 확인    
     try {
+        const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/user/logincheck`,{
+            method: 'GET',
+            credentials:'include',
+        });
+        const logincheckResult = await logincheckResponse.json();
+        if(logincheckResult.code != '200'){
+            alert("로그인을 해주세요");
+            window.location.href = "/login";
+        }
+
         const apiResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/write/check`, {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${idToken}`
-            }
+            credentials:'include',
         });
         const result = await apiResponse.json();
         console.log(result);

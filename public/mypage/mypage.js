@@ -1,21 +1,11 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const sectionsContainer = document.getElementById('sections');
     const loadingMessage = document.getElementById('loading-message');
-    const idToken = Cookies.get('token');
-    
-    if (!idToken) {
-        alert("로그인을 해주세요!");
-        window.location.href = "/login";
-        return;
-    }
 
     try {
         const apiResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/user/case`, {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${idToken}`
-            }
+            credentials: 'include'
         });
 
         const result = await apiResponse.json();

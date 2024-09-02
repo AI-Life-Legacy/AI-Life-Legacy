@@ -14,12 +14,6 @@ let speechSynthesisUtterance; // Current speech synthesis object
 let mainQuestionId = 3;
 let subQuestionId;
 
-const idToken = Cookies.get('token');
-if (!idToken) {
-    alert("로그인을 해주세요!");
-    window.location.href = "/login";
-}
-
 // 하드코딩된 대질문과 소질문
 const mainQuestion = "청소년기와 학창시절";
 questions = {
@@ -95,8 +89,8 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${idToken}`
                     },
+                    credentials: 'include',
                     body: JSON.stringify({ question: currentQuestion, data: responseText })
                 });
 
@@ -138,8 +132,8 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${idToken}`
                     },
+                    credentials: 'include',
                     body: JSON.stringify({
                         question1: currentQuestion,
                         question2: currentSecondaryQuestion, // Use the stored secondary question
@@ -169,8 +163,8 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${idToken}`
                     },
+                    credentials: 'include',
                     body: JSON.stringify({ data: result.result.data, mainQuestionId, subQuestionId, question: currentQuestion })
                 });
 

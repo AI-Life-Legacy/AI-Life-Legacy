@@ -2,18 +2,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 로딩 중... 화면을 보여주고, 컨텐츠를 숨깁니다.
     document.getElementById('loading').style.display = 'flex';
     document.getElementById('content').style.display = 'none';
-    const idToken = Cookies.get('token');
-    if(!idToken){
-      alert("로그인을 해주세요!");
-      window.location.href = "/login";
-    }
+
     try {
         const apiResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/user/logincheck`,{
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${idToken}`
-            }
+            credentials: 'include',
         });
 
         const result = await apiResponse.json();
@@ -21,10 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if(result.code === "200"){
             const apiResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/write/check/9`,{
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${idToken}`
-                }
+                credentials: 'include',
             });
     
             const result = await apiResponse.json();

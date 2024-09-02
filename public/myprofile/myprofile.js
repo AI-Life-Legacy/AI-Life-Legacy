@@ -3,13 +3,6 @@ let lastUserResponse = ''; // Variable to store the last user response
 let recognition; // Speech recognition variable
 let recognizing = false; // Speech recognition state
 let finalTranscript = ''; // Variable to store the final transcribed text
-const idToken = Cookies.get('token'); // Get the authentication token from cookies
-
-if (!idToken) {
-    alert("로그인을 해주세요!");
-    window.location.href = "/login"; // Redirect to login page if not logged in
-}
-
 let speechSynthesisUtterance; // Current speech synthesis object
 
 // Listen for the check.js completion event
@@ -95,8 +88,8 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${idToken}`
                 },
+                credentials: 'include',
                 body: JSON.stringify({ data: userResponse })
             });
             const result = await apiResponse.json();
@@ -105,10 +98,7 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
             // Make a GET request to retrieve profile data using the case number
             const apiResponse2 = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/myprofile/${caseNum}`, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${idToken}`
-                },
+                credentials: 'include',
             });
             const result2 = await apiResponse2.json();
 
@@ -142,12 +132,12 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
             });
 
             // Make a POST request to save the profile data
-            const apiResponse3 = await fetch('https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/myprofile/save', {
+            await fetch('https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/myprofile/save', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${idToken}`
                 },
+                credentials: 'include',
                 body: JSON.stringify({ data, caseNum })
             });
 

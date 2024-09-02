@@ -5,12 +5,14 @@ document.addEventListener('DOMContentLoaded', async function () {
     const prevButton = document.getElementById('prevButton');
     const questionTitle = document.querySelector('h1 strong');
 
-    const idToken = Cookies.get('token');
-
-    if (!idToken) {
-        alert("로그인을 해주세요!");
+    const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/user/logincheck`,{
+        method: 'GET',
+        credentials:'include',
+    });
+    const logincheckResult = await logincheckResponse.json();
+    if(logincheckResult.code != '200'){
+        alert("로그인을 해주세요");
         window.location.href = "/login";
-        return;
     }
 
     // 현재 URL에서 mainQuestionId와 subQuestionId 추출
@@ -21,10 +23,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     try {
         const apiResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/write/${mainId}/${subId}`, {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${idToken}`
-            }
+            credentials: 'include',
         });
 
         const result = await apiResponse.json();
@@ -71,8 +70,8 @@ document.addEventListener('DOMContentLoaded', async function () {
             method: 'PATCH',  // 수정된 데이터를 전송할 때 PATCH 사용
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${idToken}`
             },
+            credentials: 'include',
             body: JSON.stringify({ data: updatedAnswer ,mainId,subId}),
         })
         .then(response => response.json())

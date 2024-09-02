@@ -11,8 +11,14 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 document.addEventListener('DOMContentLoaded', async () => {
-  Cookies.remove('token');
-  await auth.signOut();
-  window.location.href="/";
+  const logout = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/user/logout`,{
+    method: 'GET',
+    credentials:'include',
+  });
+  const logoutresult = await logout.json();
+  if(logoutresult.status == "success"){
+    await auth.signOut();
+    window.location.href = "/";
+  }
 });
 

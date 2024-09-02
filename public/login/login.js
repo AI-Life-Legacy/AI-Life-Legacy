@@ -16,9 +16,23 @@ const loginUser = async (email, password) => {
   try {
       const userCredential = await auth.signInWithEmailAndPassword(email, password);
       const user = userCredential.user;
-      const idToken = await user.getIdToken();
-      Cookies.set('token', idToken, { expires: 1 }); // 1일 동안 유효한 쿠키 설정
-      return true;
+      const token = await user.getIdToken();
+      // 로그인 토큰 쿠키 발행
+      const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/user/login`,{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials:'include',
+        body: JSON.stringify({token})
+      });
+      const logincheckResult = await logincheckResponse.json();
+      
+      if(logincheckResult.isSuccess){
+        return true
+      }else{
+        return false;
+      }
   } catch (error) {
       console.error("Error logging in user:", error);
       return false;

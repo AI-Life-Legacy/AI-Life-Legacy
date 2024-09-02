@@ -13,7 +13,7 @@ import { userRouter } from './src/route/user.route.js';
 const app = express();
 
 app.use(cors({ 
-    origin: ['https://life-legacy-dev.firebaseapp.com','http://127.0.0.1:5002','https://life-legacy-dev.web.app'], 
+    origin: ['https://lifelegacy.co.kr','https://www.lifelegacy.co.kr'], 
     credentials: true 
 }));
 

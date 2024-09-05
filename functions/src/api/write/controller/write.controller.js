@@ -1,6 +1,6 @@
 import { response } from "../../../utils/response/response.js";
 import { status } from "../../../utils/response/response.status.js";
-import { CheckAnswerPageDataService, SaveAnswerDataService, CheckAnswerDataService, GetWriteDataService, SaveWriteDataService} from "../service/write.service.js";
+import { CheckAnswerPageDataService, SaveAnswerDataService, CheckAnswerDataService, GetWriteDataService, PatchWriteDataService} from "../service/write.service.js";
 
 export async function GetWriteData(req,res){
     try{
@@ -26,7 +26,7 @@ export async function GetWriteData(req,res){
     }
 }
 
-export async function SaveWriteData(req,res){
+export async function PatchWriteData(req,res){
     try{
         if(!res.locals.uid){
             return res.json(409).send(response(status.EMPTY_RES_LOCALS_UID));
@@ -38,7 +38,7 @@ export async function SaveWriteData(req,res){
         if(!mainId,!subId,!data){
             return res.json(402).send(response(status.EMPTY_REQUEST_BODY));
         }
-        const result = await SaveWriteDataService(uid,mainId,subId,data);
+        const result = await PatchWriteDataService(uid,mainId,subId,data);
         
         if(!result){
             return res.json(403).send(response(status.AUTOBIOGRAPHY_SAVE_ERROR));
@@ -60,7 +60,7 @@ export async function SaveAnswerData(req,res){
         const uid = res.locals.uid;
         const {data,mainQuestionId,subQuestionId,question} = req.body;
 
-        if(!data || !uid ){
+        if(!data || !mainQuestionId || !subQuestionId || !question ){
             return res.json(402).send(response(status.AUTOBIOGRAPHY_DATA_NOT_FOUND));
         }
         const result = await SaveAnswerDataService(uid,data,mainQuestionId,subQuestionId,question);
@@ -86,7 +86,7 @@ export async function CheckAnswerData(req,res){
         const result = await CheckAnswerDataService(uid);
         
         if(!result){
-            return res.json(402).send(response(status.AUTOBIOGRAPHY_NO_DATA));
+            return res.json(201).send(response(status.AUTOBIOGRAPHY_NO_DATA));
         }
 
         return res.send(response(status.SUCCESS));
@@ -110,7 +110,7 @@ export async function CheckAnswerPageData(req,res){
 
         const result = await CheckAnswerPageDataService(uid,mainId);
         if(!result){
-            return res.json(403).send(response(status.BAD_REQUEST));
+            return res.json(201).send(response(status.BAD_REQUEST));
         }
         return res.send(response(status.SUCCESS,result));
     }catch(err){

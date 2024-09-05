@@ -9,7 +9,7 @@ export async function SaveMainQuestion(req, res) {
     const {data,caseNum} = req.body;
     const uid = res.locals.uid;
     try{
-        if(!data){
+        if(!data||!caseNum){
             return res.json(402).send(response(status.MYPROFILE_DATA_NOT_FOUND));
         }
         const result = await SaveMainQuestionService(uid,data,caseNum);
@@ -36,7 +36,7 @@ export async function GetMainQuestion(req, res) {
         const result = await GetMainQuestionService(caseNum);
 
         if(!result){
-            return res.json(402).send(response(status.MYPROFILE_SAVE_ERROR));
+            return res.json(402).send(response(status.MYPROFILE_GET_ERROR));
         }
 
         return res.send(response(status.SUCCESS,result));
@@ -55,10 +55,10 @@ export async function GetUserMainQuestion(req, res) {
         const result = await GetUserMainQuestionService(uid);
 
         if(!result){
-            return res.json(402).send(response(status.MYPROFILE_SAVE_ERROR));
+            return res.json(402).send(response(status.MYPROFILE_GET_ERROR));
         }
 
-        return res.send(response(status.SUCCESS,result));
+        return res.send(response(status.SUCCESS));
     }catch(err){
         console.log(err);
         return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));

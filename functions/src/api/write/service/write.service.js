@@ -1,4 +1,4 @@
-import { CheckAnswerDataRepository, CheckAnswerPageDataRepository, GetWriteDataRepository, SaveAnswerDataRepository, SaveWriteDataRepository } from "../repository/write.repositroy.js";
+import { CheckAnswerDataRepository, CheckAnswerPageDataRepository, GetWriteDataRepository, PatchWriteDataRepository, SaveAnswerDataRepository  } from "../repository/write.repositroy.js";
 
 export async function GetWriteDataService(uid,mainId,subId) {
     try {
@@ -9,9 +9,9 @@ export async function GetWriteDataService(uid,mainId,subId) {
     }    
 }
 
-export async function SaveWriteDataService(uid,mainId,subId,data) {
+export async function PatchWriteDataService(uid,mainId,subId,data) {
     try {
-        return await SaveWriteDataRepository(uid,mainId,subId,data);
+        return await PatchWriteDataRepository(uid,mainId,subId,data);
     } catch (err) {
         console.error(err);
         return false;

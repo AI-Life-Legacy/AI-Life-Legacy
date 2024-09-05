@@ -15,7 +15,7 @@ export async function GetWriteDataRepository(uid,mainId,subId){
 
 }
 
-export async function SaveWriteDataRepository(uid,mainId,subId,data){
+export async function PatchWriteDataRepository(uid,mainId,subId,data){
     try{
         const result = await db.collection('답변').doc(uid).collection(mainId.toString()).doc(subId.toString()).update({
             answer:data,

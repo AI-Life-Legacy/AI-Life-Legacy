@@ -74,7 +74,7 @@ export async function CheckAnswerDataRepository(uid){
 }
 export async function CheckAnswerPageDataRepository(uid,mainId){
     try{
-        const isExist = await db.collection("답변").doc(uid).collection(mainId.toString()).doc(i.toString()).get();
+        const isExist = await db.collection("답변").doc(uid).collection(mainId.toString()).doc('5').get();
         const result = isExist.exists
         return result;
     }catch(err){

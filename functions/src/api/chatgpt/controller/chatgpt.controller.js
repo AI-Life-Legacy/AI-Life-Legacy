@@ -5,7 +5,7 @@ import { CombineService, MakeCaseService, MakeReQuestionDataService } from '../s
 export async function MakeCase(req, res) {
     try {
         if(!res.locals.uid){
-            return res.send(response(status.NOT_LOGIN_ERROR));
+            return res.json(409).send(response(status.EMPTY_RES_LOCALS_UID));
         }
         let { data } = req.body;
         let prompt = `
@@ -26,29 +26,27 @@ export async function MakeCase(req, res) {
         `;
 
         if (!data) {
-            return res.send(response(status.CHATGPT_DATA_NOT_FOUND));
+            return res.json(402).send(response(status.CHATGPT_DATA_NOT_FOUND));
         }
 
         prompt += data;
 
         const result = await MakeCaseService(prompt);
 
-        console.log(result);
-
         if(!result){
-            return res.send(response(status.CHATGPT_GET_QUERY_ERROR));
+            return res.json(403).send(response(status.CHATGPT_GET_QUERY_ERROR));
         }
         return res.send(response(status.SUCCESS, result));
     } catch (err) {
-        console.error('Error in GetData:', err);
-        return res.send(response(status.INTERNAL_SERVER_ERROR));
+        console.error(err);
+        return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));
     }
 }
 
 export async function MakeReQuestionData(req, res) {
     try {
         if(!res.locals.uid){
-            return res.send(response(status.NOT_LOGIN_ERROR));
+            return res.json(409).send(response(status.EMPTY_RES_LOCALS_UID));
         }
         let { question ,data } = req.body;
 
@@ -60,25 +58,24 @@ export async function MakeReQuestionData(req, res) {
         `;
 
         if (!data) {
-            return res.send(response(status.CHATGPT_DATA_NOT_FOUND));
+            return res.json(402).send(response(status.CHATGPT_DATA_NOT_FOUND));
         }
         const result = await MakeReQuestionDataService(prompt);
 
         if(!result){
-            return res.send(response(status.CHATGPT_GET_QUERY_ERROR));
+            return res.json(403).send(response(status.CHATGPT_GET_QUERY_ERROR));
         }
-        console.log(result);
 
         return res.send(response(status.SUCCESS, result));
     } catch (err) {
-        console.error('Error in GetData:', err);
-        return res.send(response(status.INTERNAL_SERVER_ERROR));
+        console.error(err);
+        return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));
     }
 }
 export async function Combine(req, res) {
     try {
         if(!res.locals.uid){
-            return res.send(response(status.NOT_LOGIN_ERROR));
+            return res.json(409).send(response(status.EMPTY_RES_LOCALS_UID));
         }
         let { question1,question2,data1,data2 } = req.body;
 
@@ -99,18 +96,17 @@ export async function Combine(req, res) {
         `
 
         if (!question1 || !question2 || !data1 || !data2) {
-            return res.send(response(status.CHATGPT_DATA_NOT_FOUND));
+            return res.json(402).send(response(status.CHATGPT_DATA_NOT_FOUND));
         }
         const result = await CombineService(prompt);
 
         if(!result){
-            return res.send(response(status.CHATGPT_GET_QUERY_ERROR));
+            return res.json(403).send(response(status.CHATGPT_GET_QUERY_ERROR));
         }
-        console.log(result);
 
         return res.send(response(status.SUCCESS, result));
     } catch (err) {
-        console.error('Error in GetData:', err);
-        return res.send(response(status.INTERNAL_SERVER_ERROR));
+        console.error(err);
+        return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));
     }
 }

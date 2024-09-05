@@ -38,18 +38,7 @@ export async function CheckAnswerDataService(uid) {
 
 export async function CheckAnswerPageDataService(uid,mainId) {
     try{
-        let count=0;
-        for (let i = 1; i <= 5; i++) {
-            const result = await CheckAnswerPageDataRepository(uid,mainId)
-            if(result){
-                count++;
-            }
-        }
-        if(count > 4){
-            return "true";
-        }else{
-            return "false";
-        }
+        return await CheckAnswerPageDataRepository(uid,mainId)     
     }catch(err){
         console.error(err);
         return false;

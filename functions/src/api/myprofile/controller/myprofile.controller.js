@@ -4,30 +4,30 @@ import { GetMainQuestionService, GetUserMainQuestionService, SaveMainQuestionSer
 
 export async function SaveMainQuestion(req, res) {
     if(!res.locals.uid){
-        return res.send(response(status.NOT_LOGIN_ERROR));
+      return res.json(409).send(response(status.EMPTY_RES_LOCALS_UID));
     }
     const {data,caseNum} = req.body;
     const uid = res.locals.uid;
     try{
         if(!data){
-            return res.send(response(status.MYPROFILE_DATA_NOT_FOUND));
+            return res.json(402).send(response(status.MYPROFILE_DATA_NOT_FOUND));
         }
         const result = await SaveMainQuestionService(uid,data,caseNum);
     
         if(!result){
-            return res.send(response(status.MYPROFILE_SAVE_ERROR));
+            return res.json(403).send(response(status.MYPROFILE_SAVE_ERROR));
         }
     
         return res.send(response(status.SUCCESS));
     }catch(err){
         console.log(err);
-        return res.send(response(status.INTERNAL_SERVER_ERROR));
+        return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));
     }
 }   
 
 export async function GetMainQuestion(req, res) {
     if(!res.locals.uid){
-        return res.send(response(status.NOT_LOGIN_ERROR));
+      return res.json(409).send(response(status.EMPTY_RES_LOCALS_UID));
     }
 
     const { caseNum } = req.params;
@@ -36,31 +36,31 @@ export async function GetMainQuestion(req, res) {
         const result = await GetMainQuestionService(caseNum);
 
         if(!result){
-            return res.send(response(status.MYPROFILE_SAVE_ERROR));
+            return res.json(402).send(response(status.MYPROFILE_SAVE_ERROR));
         }
 
         return res.send(response(status.SUCCESS,result));
     }catch(err){
         console.log(err);
-        return res.send(response(status.INTERNAL_SERVER_ERROR));
+        return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));
     }
 }   
 
 export async function GetUserMainQuestion(req, res) {
     if(!res.locals.uid){
-        return res.send(response(status.NOT_LOGIN_ERROR));
+      return res.json(409).send(response(status.EMPTY_RES_LOCALS_UID));
     }
     const uid = res.locals.uid;
     try{
         const result = await GetUserMainQuestionService(uid);
 
         if(!result){
-            return res.send(response(status.MYPROFILE_SAVE_ERROR));
+            return res.json(402).send(response(status.MYPROFILE_SAVE_ERROR));
         }
 
         return res.send(response(status.SUCCESS,result));
     }catch(err){
         console.log(err);
-        return res.send(response(status.INTERNAL_SERVER_ERROR));
+        return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));
     }
 }   

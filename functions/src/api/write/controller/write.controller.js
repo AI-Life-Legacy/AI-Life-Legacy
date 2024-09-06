@@ -1,6 +1,6 @@
 import { response } from "../../../utils/response/response.js";
 import { status } from "../../../utils/response/response.status.js";
-import { CheckAnswerPageDataService, SaveAnswerDataService, CheckAnswerDataService, GetWriteDataService, PatchWriteDataService} from "../service/write.service.js";
+import { CheckAnswerPageDataService, SaveAnswerDataService, CheckAnswerDataService, GetWriteDataService, PatchWriteDataService, CheckPageDataService} from "../service/write.service.js";
 
 export async function GetWriteData(req,res){
     try{
@@ -115,6 +115,25 @@ export async function CheckAnswerPageData(req,res){
         return res.send(response(status.SUCCESS,result));
     }catch(err){
         console.error(err);
+        return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));
+    }
+}
+
+export async function CheckPageData(req,res){
+    try{    
+        if(!res.locals.uid){
+            return res.json(409).send(response(status.EMPTY_RES_LOCALS_UID));
+        }
+        const uid = res.locals.uid;
+        const result = await CheckPageDataService(uid);
+        console.log(result);
+
+        if(!result){
+            return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));
+        }
+        return res.send(response(status.SUCCESS,result));
+    }catch(err){
+        console.log(err);
         return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));
     }
 }

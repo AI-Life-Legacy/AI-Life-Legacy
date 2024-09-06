@@ -82,3 +82,20 @@ export async function CheckAnswerPageDataRepository(uid,mainId){
         return false;
     }
 }
+export async function CheckPageDataRepository(uid){
+    try{
+        let result;
+        for(let i=1; i<11; i++){
+            const isExist = await db.collection("답변").doc(uid).collection(i.toString()).doc('5').get();
+            if(!isExist.exists){
+                result = i;
+                return ;
+            }
+        }
+        console.log(result);
+        return result;
+    }catch(err){
+        console.error("write/CheckAnswerPageDataRepository error: ",err);
+        return false;
+    }
+}

@@ -164,21 +164,23 @@
 
 .navbar li {
     flex: 1;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.navbar p {
+.navbar a {
     color: #333;
     font-size: 14px;
     margin-top: 8px;
+    text-decoration: none;
 }
 
-.navbar p.nav-active {
+.navbar a.nav-active {
     color: #4B90E2;
     font-size: 14px;
     margin-top: 8px;
 }
-
 
 .navbar img {
     width: 24px;

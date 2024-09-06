@@ -15,7 +15,7 @@ export async function GetWriteDataRepository(uid,mainId,subId){
 
 }
 
-export async function SaveWriteDataRepository(uid,mainId,subId,data){
+export async function PatchWriteDataRepository(uid,mainId,subId,data){
     try{
         const result = await db.collection('답변').doc(uid).collection(mainId.toString()).doc(subId.toString()).update({
             answer:data,
@@ -74,8 +74,25 @@ export async function CheckAnswerDataRepository(uid){
 }
 export async function CheckAnswerPageDataRepository(uid,mainId){
     try{
-        const isExist = await db.collection("답변").doc(uid).collection(mainId.toString()).doc(i.toString()).get();
+        const isExist = await db.collection("답변").doc(uid).collection(mainId.toString()).doc('5').get();
         const result = isExist.exists
+        return result;
+    }catch(err){
+        console.error("write/CheckAnswerPageDataRepository error: ",err);
+        return false;
+    }
+}
+export async function CheckPageDataRepository(uid){
+    try{
+        let result;
+        for(let i=1; i<11; i++){
+            const isExist = await db.collection("답변").doc(uid).collection(i.toString()).doc('5').get();
+            if(!isExist.exists){
+                result = i;
+                return ;
+            }
+        }
+        console.log(result);
         return result;
     }catch(err){
         console.error("write/CheckAnswerPageDataRepository error: ",err);

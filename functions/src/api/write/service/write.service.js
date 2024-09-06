@@ -1,4 +1,4 @@
-import { CheckAnswerDataRepository, CheckAnswerPageDataRepository, GetWriteDataRepository, SaveAnswerDataRepository, SaveWriteDataRepository } from "../repository/write.repositroy.js";
+import { CheckAnswerDataRepository, CheckAnswerPageDataRepository, CheckPageDataRepository, GetWriteDataRepository, PatchWriteDataRepository, SaveAnswerDataRepository  } from "../repository/write.repositroy.js";
 
 export async function GetWriteDataService(uid,mainId,subId) {
     try {
@@ -9,9 +9,9 @@ export async function GetWriteDataService(uid,mainId,subId) {
     }    
 }
 
-export async function SaveWriteDataService(uid,mainId,subId,data) {
+export async function PatchWriteDataService(uid,mainId,subId,data) {
     try {
-        return await SaveWriteDataRepository(uid,mainId,subId,data);
+        return await PatchWriteDataRepository(uid,mainId,subId,data);
     } catch (err) {
         console.error(err);
         return false;
@@ -38,18 +38,16 @@ export async function CheckAnswerDataService(uid) {
 
 export async function CheckAnswerPageDataService(uid,mainId) {
     try{
-        let count=0;
-        for (let i = 1; i <= 5; i++) {
-            const result = await CheckAnswerPageDataRepository(uid,mainId)
-            if(result){
-                count++;
-            }
-        }
-        if(count > 4){
-            return "true";
-        }else{
-            return "false";
-        }
+        return await CheckAnswerPageDataRepository(uid,mainId)     
+    }catch(err){
+        console.error(err);
+        return false;
+    }
+}
+
+export async function CheckPageDataService(uid) {
+    try{
+        return await CheckPageDataRepository(uid)     
     }catch(err){
         console.error(err);
         return false;

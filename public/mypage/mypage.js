@@ -176,8 +176,16 @@ function renderSections(sectionsContainer, sections) {
 
         const sectionTitleElement = document.createElement('div');
         sectionTitleElement.classList.add('section-title');
-        sectionTitleElement.textContent = sectionTitle;
+
+        // 목차 타이틀 앞에 인덱스 번호 추가
+        sectionTitleElement.textContent = `${(sectionIndex + 1)}. ${sectionTitle}`;
         sectionElement.appendChild(sectionTitleElement);
+
+        // 타이틀 옆 화살표
+        const sectionTitleDownArrow = document.createElement('img');
+        sectionTitleDownArrow.classList.add('section-arrow');
+        sectionTitleDownArrow.setAttribute('src','../images/arrow.png');
+        sectionElement.appendChild(sectionTitleDownArrow);
 
         const questionListElement = document.createElement('div');
         questionListElement.classList.add('question-list');
@@ -185,7 +193,7 @@ function renderSections(sectionsContainer, sections) {
         questions[sectionTitle].forEach((question, questionIndex) => {
             const questionItemElement = document.createElement('div');
             questionItemElement.classList.add('question-item');
-            questionItemElement.textContent = question;
+            questionItemElement.textContent = `${questionIndex + 1}. ${question}`;
 
             // 각 질문에 대해 edit 페이지로 이동하는 클릭 이벤트 추가
             questionItemElement.addEventListener('click', () => {
@@ -202,11 +210,11 @@ function renderSections(sectionsContainer, sections) {
 
         // 목차 클릭 이벤트 추가
         sectionTitleElement.addEventListener('click', () => {
-            if (questionListElement.style.display === 'none' || !questionListElement.style.display) {
-                questionListElement.style.display = 'block';
-            } else {
-                questionListElement.style.display = 'none';
-            }
+            questionListElement.classList.toggle('open');
+        });
+        
+        sectionTitleDownArrow.addEventListener('click', () => {
+            questionListElement.classList.toggle('open');
         });
     });
 }

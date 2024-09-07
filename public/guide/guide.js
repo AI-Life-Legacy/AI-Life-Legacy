@@ -1,6 +1,9 @@
 let currentStep = 1;
 const totalSteps = 7;
 
+document.getElementById("nextBtn").innerText = `다음 (${currentStep}/${totalSteps})`;
+
+
 document.getElementById("nextBtn").addEventListener("click", function () {
   document.getElementById(`step${currentStep}`).style.display = "none";
   currentStep++;
@@ -29,7 +32,7 @@ document.getElementById("prevBtn").addEventListener("click", function () {
   }
 
   if (currentStep < totalSteps) {
-    document.getElementById("nextBtn").innerText = "다음";
+    document.getElementById("nextBtn").innerText = `다음 (${currentStep}/${totalSteps})`;
   }
 
   document.getElementById(`step${currentStep}`).style.display = "block";

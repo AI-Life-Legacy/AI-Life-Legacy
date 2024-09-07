@@ -41,31 +41,69 @@
     padding-bottom: 108px;
 }
 
+.section {
+    display: flex;
+    flex-wrap: wrap;
+
+    align-items: center;
+}
+
+.section:not(:last-child) {
+    margin-bottom: 20px;
+}
+
 .section-title {
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+    padding: 12px 0px;
+    
+    width: calc(100% - 16px);
+}
+
+.section-arrow {
+    width: 16px;
+    transition: transform 0.3s ease;
+}
+
+.section-arrow.open {
+    transform: rotate(180deg);
 }
 
 .question-list {
-    padding: 0;
-    margin: 10px 0;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+
+    border-top: 1px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 0px 0px 8px 8px;
+    padding: 0px 12px;
+}
+
+.question-list.open {
+    max-height: 500px; /* 충분히 큰 값 설정 */
 }
 
 .question-item {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin: 5px 0;
     cursor: pointer;
-    background-color: #fafafa;
+    padding:12px 0px;
+    border-bottom:1px solid #ddd;
+
+    font-size: 14px;
+    font-weight: 400;
+    color:#333;
+    line-height: 1.4;
 }
 
-.question-item:hover {
-    background-color: #f0f0f0;
+.question-item:last-child {
+    border-bottom:none;
 }
+
+/* .question-item:hover {
+    background-color: #f0f0f0;
+} */
 
 .answer-item {
     padding: 10px;

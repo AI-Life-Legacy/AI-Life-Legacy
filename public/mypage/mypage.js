@@ -211,10 +211,12 @@ function renderSections(sectionsContainer, sections) {
         // 목차 클릭 이벤트 추가
         sectionTitleElement.addEventListener('click', () => {
             questionListElement.classList.toggle('open');
+            sectionTitleDownArrow.classList.toggle('open');
         });
         
         sectionTitleDownArrow.addEventListener('click', () => {
             questionListElement.classList.toggle('open');
+            sectionTitleDownArrow.classList.toggle('open');
         });
     });
 }

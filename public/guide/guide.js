@@ -8,6 +8,7 @@ document.getElementById("prevBtn").innerText = "돌아가기";
 // 다음 클릭 시
 document.getElementById("nextBtn").addEventListener("click", function () {
   document.getElementById(`step${currentStep}`).style.display = "none";
+  window.scrollTo(0, 0);
 
   currentStep++;
   document.getElementById("nextBtn").innerText = `다음 (${currentStep}/${totalSteps})`;
@@ -30,7 +31,8 @@ document.getElementById("nextBtn").addEventListener("click", function () {
 
 document.getElementById("prevBtn").addEventListener("click", function () {
   document.getElementById(`step${currentStep}`).style.display = "none";
-  
+  window.scrollTo(0, 0);
+
   currentStep--;
   document.getElementById("guideHeader").innerText = `자서전 작성 가이드 (${currentStep}/${totalSteps})`;
 

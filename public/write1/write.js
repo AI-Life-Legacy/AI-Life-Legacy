@@ -42,13 +42,25 @@ document.addEventListener('checkJsComplete', () => {
 });
 
 document.getElementById('plusBtn').addEventListener('click', () => {
+    const plusBtnImage = document.getElementById('plusBtn');
     const actionButtons = document.getElementById('action-buttons');
-    // Toggle the visibility of the action buttons
-    if (actionButtons.style.display === 'none' || actionButtons.style.display === '') {
-        actionButtons.style.display = 'flex';
-        initializeVoiceRecognition(); // Initialize the voice recognition when shown
+
+    if (!actionButtons.classList.contains('show')) {
+        // 슬라이드업 애니메이션
+        actionButtons.style.display = 'flex'; // flex로 표시
+        plusBtnImage.style.transform ='rotate(45deg)';
+
+        setTimeout(() => {
+            actionButtons.classList.add('show');
+        },0); // 약간의 지연시간을 추가하여 transition 작동
     } else {
-        actionButtons.style.display = 'none';
+        // 슬라이드다운 애니메이션
+        actionButtons.classList.remove('show');
+        plusBtnImage.style.transform ='rotate(0deg)';
+
+        setTimeout(() => {
+            actionButtons.style.display = 'none'; // 애니메이션이 끝난 후 숨김 처리
+        }, 300); // transition 시간에 맞춰서 숨김 처리
     }
 });
 

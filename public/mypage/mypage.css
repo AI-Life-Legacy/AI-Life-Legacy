@@ -22,7 +22,6 @@
 .container {
     width: 100%;
     height: calc(100vh - 64px);
-    max-width: 600px;
     background-color: white;
 
     display: flex;
@@ -205,10 +204,4 @@
     font-size: 20px;
     color: #333;
     margin-top: 20px;
-}
-
-@media (min-width: 768px) {
-    .container {
-        max-width: 400px;
-    }
 }

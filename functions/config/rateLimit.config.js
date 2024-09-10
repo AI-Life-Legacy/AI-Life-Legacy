@@ -1,7 +1,5 @@
 import rateLimit from 'express-rate-limit';
 
-const app = express();
-
 // API 호출 제한 설정
 export const commonApiLimiter = rateLimit({
     windowMs: 10 * 60 * 1000, // 10분

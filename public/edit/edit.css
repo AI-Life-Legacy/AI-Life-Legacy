@@ -10,13 +10,15 @@
 
 .container {
     width: 100%;
+
+    max-width: 768px;
     min-height: 100vh;
+    margin: 0 auto;
     background-color: white;
 
     display: flex;
     flex-direction: column;
     padding: 20px;
-    flex-grow: 1;
     overflow: scroll;
 }
 
@@ -41,6 +43,7 @@ h1 {
     color:#333;
     line-height: 1.4;
     text-align : justify;
+    height: 450px;
 }
 
 #answerInput {

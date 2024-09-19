@@ -10,6 +10,7 @@ import { writeRouter } from './src/route/write.route.js';
 import { myprofileRouter } from './src/route/myprofile.route.js';
 import { userRouter } from './src/route/user.route.js';
 import { LoginCheckMiddleWares } from './src/middlewares/logincheck.middlewares.js';
+import { chatGPTApiLimiter, commonApiLimiter } from './config/rateLimit.config.js';
 
 const app = express();
 
@@ -23,9 +24,9 @@ app.use(express.json()); // JSON 요청을 처리할 수 있도록 설정
 app.use(express.urlencoded({ extended: true })); // URL-encoded 요청을 처리할 수 있도록 설정
 
 
-app.use("/user",userRouter);
-app.use("/myprofile",LoginCheckMiddleWares,myprofileRouter);
-app.use("/write",LoginCheckMiddleWares, writeRouter);
-app.use("/chatGpt",LoginCheckMiddleWares, chatGptRouter);
+app.use("/user",commonApiLimiter,userRouter);
+app.use("/myprofile",commonApiLimiter,LoginCheckMiddleWares,myprofileRouter);
+app.use("/write",commonApiLimiter,LoginCheckMiddleWares, writeRouter);
+app.use("/chatGpt",chatGPTApiLimiter,LoginCheckMiddleWares, chatGptRouter);
 
 export const api = functions.region("asia-northeast3").https.onRequest(app);

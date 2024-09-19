@@ -70,7 +70,7 @@ export const Login = async (req, res) => {
 export async function Logout(req,res) {
   try{
     res.clearCookie('session',{ httpOnly: true, secure: true, sameSite: 'None'});
-    return res.send(response(status.SUCCESS));
+    res.end(JSON.stringify({ status: 'success' }));
   }catch(err){
     console.error(err);
     return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));

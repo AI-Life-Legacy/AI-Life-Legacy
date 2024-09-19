@@ -21,7 +21,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     const subId = urlParts[3];
     console.log(mainId,subId);
     try {
-        const apiResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/write/${mainId}/${subId}`, {
+        // const apiResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/write/${mainId}/${subId}`, {
+        //     method: 'GET',
+        //     credentials: 'include',
+        // });
+
+        const apiResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/write/${1}/${1}`, {
             method: 'GET',
             credentials: 'include',
         });

@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
     
             const result = await apiResponse.json();
-            if(result.result.data == 'true'){
+            if(result.code === "200"){
                 window.location.href = "/finish";
             }else{
                 document.getElementById('loading').style.display = 'none';

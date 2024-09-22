@@ -15,7 +15,7 @@ import { chatGPTApiLimiter, commonApiLimiter } from './config/rateLimit.config.j
 const app = express();
 
 app.use(cors({ 
-    origin: ['https://lifelegacy.co.kr','https://www.lifelegacy.co.kr','http://127.0.0.1:5500','http://192.168.219.103:5500'], 
+    origin: ['https://lifelegacy.co.kr','https://www.lifelegacy.co.kr','http://127.0.0.1:5002','http://192.168.219.103:5500'], 
     credentials: true 
 }));
 

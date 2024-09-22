@@ -10,7 +10,6 @@
 
 .container {
     width: 100%;
-    max-width: 600px;
     background-color: white;
 
     display: flex;
@@ -106,10 +105,4 @@
 .footer #nextBtn {
     background-color: #4B90E2;
     color:white;
-}
-
-@media (min-width: 768px) {
-    .container {
-        max-width: 400px;
-    }
 }

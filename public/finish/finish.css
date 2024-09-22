@@ -11,7 +11,9 @@
 .container {
     width: 100%;
     height: 100vh;
+    max-width: 768px;
     background-color: white;
+    margin: 0 auto;
 
     display: flex;
     align-items: center;
@@ -30,6 +32,7 @@
 .check-icon {
     font-size: 48px;
     margin-bottom: 20px;
+    color: #4a90e2;
 }
 
 h1 {
@@ -63,10 +66,4 @@ p {
 
 .main-button:hover {
     background-color: #0056b3; /* hover 시 더 어두운 파란색 */
-}
-
-@media (min-width: 768px) {
-    .container {
-        max-width: 400px;
-    }
 }

@@ -33,7 +33,7 @@ export const status = {
     MYPROFILE_DATA_NOT_FOUND: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "내 프로필 : Data가 없습니다."},
     MYPROFILE_SAVE_ERROR: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "내 프로필 : 데이터를 저장하던 중 오류가 발생했습니다."},
     MYPROFILE_GET_ERROR: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "내 프로필 : 데이터 불러오던 중 오류가 발생했습니다."},
-    
+    MYPROFILE_EMPTY_DATA:{status: StatusCodes.NOT_FOUND, "isSuccess": false, "code": "404", "message": "내 프로필 : 쿼리 데이터가 비어있습니다."},
     // login err
  
     // authentication err

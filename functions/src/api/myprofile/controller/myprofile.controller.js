@@ -2,65 +2,61 @@ import { response } from "../../../utils/response/response.js";
 import { status } from "../../../utils/response/response.status.js";
 import { GetMainQuestionService, GetUserMainQuestionService, SaveMainQuestionService } from "../service/myprofile.service.js";
 
-export async function SaveMainQuestion(req, res) {
-    if(!res.locals.uid){
-      return res.json(409).send(response(status.EMPTY_RES_LOCALS_UID));
-    }
-    const {data,caseNum} = req.body;
-    const uid = res.locals.uid;
+export async function GetUserMainQuestion(req, res) {
     try{
-        if(!data||!caseNum){
-            return res.json(402).send(response(status.MYPROFILE_DATA_NOT_FOUND));
+        if (!checkUidInLocals(res)) {
+            return res.status(409).json(response(status.EMPTY_RES_LOCALS_UID));
         }
-        const result = await SaveMainQuestionService(uid,data,caseNum);
-    
-        if(!result){
-            return res.json(403).send(response(status.MYPROFILE_SAVE_ERROR));
-        }
-    
-        return res.send(response(status.SUCCESS));
+
+        await GetUserMainQuestionService(res.locals.uid);
+
+        return res.json(response(status.SUCCESS));
     }catch(err){
-        console.log(err);
-        return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));
+        if(err.message == 'DATA_NOT_FOUND'){
+            return res.status(404).json(response(status.MYPROFILE_GET_ERROR));
+        }
+        console.log("myprofile / GetUserMainQuestion Controller error:",err);
+        return res.status(500).json(response(status.INTERNAL_SERVER_ERROR));
+    }
+}   
+
+export async function SaveMainQuestion(req, res) {
+    try{
+        if (!checkUidInLocals(res)) {
+            return res.status(409).json(response(status.EMPTY_RES_LOCALS_UID));
+        }
+
+        const {data,caseNum} = req.body;
+        if(!data||!caseNum){
+            return res.status(400).json(response(status.MYPROFILE_DATA_NOT_FOUND));
+        }
+
+        await SaveMainQuestionService(res.locals.uid,data,caseNum);
+        return res.json(response(status.SUCCESS));
+    }catch(err){
+        console.log("myprofile/SaveMainQuestion error:",err);
+        return res.status(500).json(response(status.INTERNAL_SERVER_ERROR));
     }
 }   
 
 export async function GetMainQuestion(req, res) {
-    if(!res.locals.uid){
-      return res.json(409).send(response(status.EMPTY_RES_LOCALS_UID));
-    }
-
-    const { caseNum } = req.params;
-
     try{
+        if (!checkUidInLocals(res)) {
+            return res.status(409).json(response(status.EMPTY_RES_LOCALS_UID));
+        }
+
+        const { caseNum } = req.params;
+        if(!caseNum){
+            return res.status(400).json(response(status.MYPROFILE_EMPTY_DATA));
+        }
+
         const result = await GetMainQuestionService(caseNum);
-
-        if(!result){
-            return res.json(402).send(response(status.MYPROFILE_GET_ERROR));
-        }
-
-        return res.send(response(status.SUCCESS,result));
+        return res.json(response(status.SUCCESS,result));
     }catch(err){
-        console.log(err);
-        return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));
-    }
-}   
-
-export async function GetUserMainQuestion(req, res) {
-    if(!res.locals.uid){
-      return res.json(409).send(response(status.EMPTY_RES_LOCALS_UID));
-    }
-    const uid = res.locals.uid;
-    try{
-        const result = await GetUserMainQuestionService(uid);
-
-        if(!result){
-            return res.json(402).send(response(status.MYPROFILE_GET_ERROR));
+        if(err.message == 'DATA_NOT_FOUND'){
+            return res.status(404).json(response(status.MYPROFILE_DATA_NOT_FOUND));
         }
-
-        return res.send(response(status.SUCCESS));
-    }catch(err){
         console.log(err);
-        return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));
+        return res.status(500).json(response(status.INTERNAL_SERVER_ERROR));
     }
 }   

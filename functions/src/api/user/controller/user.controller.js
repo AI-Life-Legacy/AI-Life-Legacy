@@ -1,9 +1,13 @@
 import { response } from "../../../utils/response/response.js";
 import { status } from "../../../utils/response/response.status.js";
-import { GetCaseService, LoginService } from "../service/user.service.js";
 import { auth } from "../../../../config/firebase.config.js";
 import { checkUidInLocals } from "../../../utils/validators/logincheck.js";
 import { COOKIE_EXPIRES_IN } from "../../../utils/const/constants.js";
+import { UserService } from "../service/user.service.js";
+import { LoginDTO } from "../dto/user.dto.js";
+import { loginTokenSchema } from "../../../vaild/user.vaild.js";
+
+const userService = new UserService();
 
 export const GetCase = async (req, res) => {
   try {
@@ -13,10 +17,10 @@ export const GetCase = async (req, res) => {
     }
 
     // 유저 케이스 가져오기
-    const result = await GetCaseService(res.locals.uid);
+    const result = await userService.getUserCase(res.locals.uid);
     
     // 성공 응답
-    return res.status(200).json(response(status.SUCCESS, result));
+    return res.status(200).json(response(status.SUCCESS, result.userCase));
   } catch (err) {
     // 예외 처리
     if (err.message === 'USER_NOT_FOUND') {
@@ -36,8 +40,8 @@ export const LoginCheck = async (req, res) => {
 
     // 세션 쿠키 검증
     const decodedToken = await auth.verifySessionCookie(req.cookies.session, true); // 유효성 강제 검증
-    return res.status(200).json(response(status.SUCCESS, decodedToken));
 
+    return res.status(200).json(response(status.SUCCESS, decodedToken));
   } catch (err) {
     // 토큰 유효성 에러 처리
     if (err.code === 'auth/argument-error') {
@@ -57,8 +61,14 @@ export const Login = async (req, res) => {
       return res.status(400).json(response(status.USER_EMPTY_TOKEN));
     }
 
-    // 세션 쿠키 생성
-    const sessionCookie = await LoginService(req.body.token);
+    const { error, value } = loginTokenSchema.validate(req.body);
+    if (error) {
+      const errorMessages = error.details.map(detail => detail.message);
+      return res.status(400).json(response(status.USER_TOKEN_UNAUTHORIZED, errorMessages));
+    }
+
+    const loginDTO = new LoginDTO(value.token);
+    const sessionCookie = await userService.login(loginDTO);    
 
     // 세션 쿠키가 성공적으로 생성되면 쿠키 설정 및 응답
     const options = { maxAge: COOKIE_EXPIRES_IN, httpOnly: true, secure: true, sameSite: 'None' };

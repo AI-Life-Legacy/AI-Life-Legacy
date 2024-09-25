@@ -1,14 +1,22 @@
 import { response } from "../../../utils/response/response.js";
 import { status } from "../../../utils/response/response.status.js";
-import { CombineService, MakeCaseService, MakeReQuestionDataService } from '../service/chatgpt.service.js';
+import { checkUidInLocals } from "../../../utils/validators/logincheck.js";
+import { combineDTO } from "../dto/chatgpt.dto.js";
+import { ChatGPTAPI } from '../service/chatgpt.service.js';
 
 export async function MakeCase(req, res) {
     try {
-        if(!res.locals.uid){
-            return res.json(409).send(response(status.EMPTY_RES_LOCALS_UID));
+        if (!checkUidInLocals(res)) {
+            return res.status(409).json(response(status.EMPTY_RES_LOCALS_UID));
         }
-        let { data } = req.body;
-        let prompt = `
+
+        const { data } = req.body;
+        if (!data) {
+            return res.status(400).json(response(status.CHATGPT_DATA_NOT_FOUND));
+        }
+
+        const CHATGPTTOKEN=100;
+        const prompt = `
         사용자의 답변을 통해 케이스를 분류합니다.
         사용자 데이터: ${data}
         케이스 분류 기준:
@@ -25,61 +33,80 @@ export async function MakeCase(req, res) {
         일치하는 case 번호를 'case_번호' 형태로만 응답하세요. 예를 들어, case_1이라면 'case_1'로 응답하세요. 따옴표나 추가적인 설명은 포함하지 마세요.
         `;
 
-        if (!data) {
-            return res.json(402).send(response(status.CHATGPT_DATA_NOT_FOUND));
-        }
+        const result = await ChatGPTAPI(prompt,CHATGPTTOKEN);
 
-        prompt += data;
-
-        const result = await MakeCaseService(prompt);
-
-        if(!result){
-            return res.json(403).send(response(status.CHATGPT_GET_QUERY_ERROR));
-        }
-        return res.send(response(status.SUCCESS, result));
+        return res.json(response(status.SUCCESS, result));
     } catch (err) {
+        if (err.message === 'CHATGPT_AUTH_ERR') {
+            return res.status(401).json(response(status.CHATGPT_AUTH_ERROR));
+        }
+        if (err.message === 'CHATGPT_RATE_LIMIT_ERR') {
+            return res.status(429).json(response(status.CHATGPT_RATE_LIMIT_ERROR));
+        }
+        if (err.message === 'CHATGPT_ERR') {
+            return res.status(500).json(response(status.CHATGPT_GET_QUERY_ERROR));
+        }
         console.error(err);
-        return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));
+        return res.status(500).json(response(status.INTERNAL_SERVER_ERROR));
     }
 }
 
 export async function MakeReQuestionData(req, res) {
     try {
-        if(!res.locals.uid){
-            return res.json(409).send(response(status.EMPTY_RES_LOCALS_UID));
+        if (!checkUidInLocals(res)) {
+            return res.status(409).json(response(status.EMPTY_RES_LOCALS_UID));
         }
-        let { question ,data } = req.body;
 
-        let prompt = `
+        let { question ,data } = req.body;
+        if (!question) {
+            return res.status(400).json(response(status.CHATGPT_EMPTY_QUESTION_DATA));
+        }
+        if (!data) {
+            return res.status(400).json(response(status.CHATGPT_EMPTY_DATA));
+        }        
+        const CHATGPTTOKEN=1000;
+        const prompt = `
         나는 자서전을 쓰고 있어. ${question} 질문에 대해 ${data}라고 대답했어.
         이 대답을 바탕으로 더 깊이 있는 이야기를 끌어낼 수 있는 구체적이고 흥미로운 2차 질문을 하나 만들어줘.
         질문은 개인적인 경험을 더 상세하게 묻거나, 특정한 감정이나 기억을 이끌어낼 수 있는 것이어야 해. 상황에 맞게 너가 구체적이고 흥미로운 2차 질문을 하나 만들어줘.
         결과물에는 따옴표나 추가 설명 없이 오직 질문만 작성해줘.
         `;
 
-        if (!data) {
-            return res.json(402).send(response(status.CHATGPT_DATA_NOT_FOUND));
-        }
-        const result = await MakeReQuestionDataService(prompt);
+        const result = await ChatGPTAPI(prompt,CHATGPTTOKEN);
 
-        if(!result){
-            return res.json(403).send(response(status.CHATGPT_GET_QUERY_ERROR));
-        }
-
-        return res.send(response(status.SUCCESS, result));
+        return res.json(response(status.SUCCESS, result));
     } catch (err) {
+        if (err.message === 'CHATGPT_AUTH_ERR') {
+            return res.status(401).json(response(status.CHATGPT_AUTH_ERROR));
+        }
+        if (err.message === 'CHATGPT_RATE_LIMIT_ERR') {
+            return res.status(429).json(response(status.CHATGPT_RATE_LIMIT_ERROR));
+        }
+        if (err.message === 'CHATGPT_ERR') {
+            return res.status(500).json(response(status.CHATGPT_GET_QUERY_ERROR));
+        }
         console.error(err);
-        return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));
+        return res.status(500).json(response(status.INTERNAL_SERVER_ERROR));
     }
 }
+
 export async function Combine(req, res) {
     try {
-        if(!res.locals.uid){
-            return res.json(409).send(response(status.EMPTY_RES_LOCALS_UID));
+        if (!checkUidInLocals(res)) {
+            return res.status(409).json(response(status.EMPTY_RES_LOCALS_UID));
         }
-        let { question1,question2,data1,data2 } = req.body;
 
-        let prompt = `
+        // Joi 검증 실행
+        const { value, error } = combineDTO.validate(req.body);
+        // Joi 검증 실패 시
+        if (error) {
+            const errorMessages = error.details.map(detail => detail.message);
+            return res.status(400).json(response(status.CHATGPT_EMPTY_DATA, errorMessages));
+        }
+        const { question1, question2, data1, data2 } = value;
+        
+        const CHATGPTTOKEN=2000;
+        const prompt = `
         나는 현재 자서전을 작성하고 있습니다. 사용자로부터 두 개의 질문에 대한 답변을 받았습니다. 첫 번째 질문은 "${question1}"이고, 답변은 "${data1}"이야. 두번째 질문은 "${question2}"이고, 답변은 "${data2}"이야.
         해당 질문과 답변을 토대로 다음 예시를 참고해서 따옴표나 사족 없이, 최종 수정된 문장을 나한테 줘.
         ***
@@ -94,19 +121,19 @@ export async function Combine(req, res) {
         책은 내 어린 시절의 가장 친한 친구였다. 그림책을 펼치면 시간 가는 줄 모르고 빠져들었던 기억이 난다. 3살 때 처음 내뱉은 말이 "책"이었다는 건 내 인생의 방향을 예견한 듯하다. 그 순간 부모님의 놀란 표정이 아직도 눈에 선하다.
         이렇게 책과 함께 시작된 나의 이야기는 지금도 계속되고 있다. 그때부터 지금까지, 나는 여전히 책의 세계에 푹 빠져 있다.
         `
-
-        if (!question1 || !question2 || !data1 || !data2) {
-            return res.json(402).send(response(status.CHATGPT_DATA_NOT_FOUND));
-        }
-        const result = await CombineService(prompt);
-
-        if(!result){
-            return res.json(403).send(response(status.CHATGPT_GET_QUERY_ERROR));
-        }
-
+        const result = await ChatGPTAPI(prompt,CHATGPTTOKEN);
         return res.send(response(status.SUCCESS, result));
     } catch (err) {
+        if (err.message === 'CHATGPT_AUTH_ERR') {
+            return res.status(401).json(response(status.CHATGPT_AUTH_ERROR));
+        }
+        if (err.message === 'CHATGPT_RATE_LIMIT_ERR') {
+            return res.status(429).json(response(status.CHATGPT_RATE_LIMIT_ERROR));
+        }
+        if (err.message === 'CHATGPT_ERR') {
+            return res.status(500).json(response(status.CHATGPT_GET_QUERY_ERROR));
+        }
         console.error(err);
-        return res.json(500).send(response(status.INTERNAL_SERVER_ERROR));
+        return res.status(500).json(response(status.INTERNAL_SERVER_ERROR));
     }
 }

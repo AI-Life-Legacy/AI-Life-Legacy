@@ -15,9 +15,13 @@ export const status = {
     EMPTY_RES_LOCALS_UID: {status: StatusCodes.CONFLICT, "isSuccess": false, "code": "COMMON1", "message": "잘못된 경로입니다." },
     
     // chatGPT err
-    CHATGPT_DATA_NOT_FOUND: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "chat gpt: Data가 없습니다."},
+    CHATGPT_EMPTY_QUESTION_DATA: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "chat gpt: Question Data가 없습니다."},
+    CHATGPT_EMPTY_DATA: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "chat gpt: Data가 없습니다."},
     CHATGPT_GET_QUERY_ERROR: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "chat gpt: 데이터 불러오기 쿼리에 오류가 발생했습니다."},
-
+    CHATGPT_RATE_LIMIT_ERROR:{status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "chat gpt: 토큰제한을 넘었습니다"},
+    CHATGPT_AUTH_ERROR:{status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "chat gpt: 인증오류 발생"},
+   
+   
     // autobiography err
     AUTOBIOGRAPHY_DATA_NOT_FOUND: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "자서전: Data가 없습니다."},
     AUTOBIOGRAPHY_SAVE_ERROR: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "자서전: 데이터를 저장하던 중 오류가 발생했습니다."},

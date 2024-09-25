@@ -26,9 +26,14 @@ export const status = {
     AUTOBIOGRAPHY_DATA_NOT_FOUND: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "자서전: Data가 없습니다."},
     AUTOBIOGRAPHY_SAVE_ERROR: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "자서전: 데이터를 저장하던 중 오류가 발생했습니다."},
     AUTOBIOGRAPHY_GET_ERROR: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "자서전: 데이터 불러오던 중 오류가 발생했습니다."},
-    AUTOBIOGRAPHY_NO_DATA: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "자서전: 작성하신 데이터가 없습니다."},
+    AUTOBIOGRAPHY_EMPTY_REQUEST_DATA: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "자서전: 작성하신 데이터가 없습니다."},
+    AUTOBIOGRAPHY_EMPTY_QUERY_DATA: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "자서전: 작성하신 ~"},
+    AUTOBIOGRAPHY_PATCH_ERROR: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "자서전: 데이터를 저장하던 중 오류가 발생했습니다."},
     
-    // user err
+    
+    
+    
+    // user er
     USER_GETCASE_ERROR: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "유저 : 사용자 Case를 불러오는 중 오류가 발생했습니다."},
     USER_EMPTY_TOKEN: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "유저 : 토큰이 비어 있습니다."},
     USER_TOKEN_UNAUTHORIZED : {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "400", "message": "유저 : 유효하지 않은 토큰입니다."},

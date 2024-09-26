@@ -14,7 +14,7 @@ export async function GetUserMainQuestion(req, res) {
 
         const result = await myProfileService.GetUserMainQuestion(res.locals.uid);
 
-        return res.json(response(status.SUCCESS,result));
+        return res.json(response(status.SUCCESS,result.data));
     }catch(err){
         if(err.message == 'DATA_NOT_FOUND'){
             return res.status(404).json(response(status.MYPROFILE_GET_ERROR));
@@ -30,7 +30,7 @@ export async function SaveMainQuestion(req, res) {
             return res.status(409).json(response(status.EMPTY_RES_LOCALS_UID));
         }
 
-        const {error, value} = saveMainQuestionSchema.valid(req.body);
+        const {error, value} = saveMainQuestionSchema.validate(req.body);
         if (error) {
             const errorMessages = error.details.map(detail => detail.message);
             return res.status(400).json(response(status.MYPROFILE_DATA_NOT_FOUND, errorMessages));
@@ -53,7 +53,7 @@ export async function GetMainQuestion(req, res) {
             return res.status(409).json(response(status.EMPTY_RES_LOCALS_UID));
         }
 
-        const {error,value} = getMainQuestionSchema.valid(req.params);
+        const {error,value} = getMainQuestionSchema.validate(req.params);
         if (error) {
             const errorMessages = error.details.map(detail => detail.message);
             return res.status(400).json(response(status.MYPROFILE_EMPTY_DATA, errorMessages));

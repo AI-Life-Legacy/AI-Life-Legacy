@@ -1,6 +1,10 @@
 import { response } from "../../../utils/response/response.js";
 import { status } from "../../../utils/response/response.status.js";
-import { GetMainQuestionService, GetUserMainQuestionService, SaveMainQuestionService } from "../service/myprofile.service.js";
+import { getMainQuestionSchema, saveMainQuestionSchema } from "../../../vaild/myprofile.vaild.js";
+import { GetMainQuestionDTO, SaveMainQuestionDTO } from "../dto/myprofile.dto.js";
+import  { MyProfileService } from '../service/myprofile.service.js'
+
+const myProfileService = new MyProfileService;
 
 export async function GetUserMainQuestion(req, res) {
     try{
@@ -8,9 +12,9 @@ export async function GetUserMainQuestion(req, res) {
             return res.status(409).json(response(status.EMPTY_RES_LOCALS_UID));
         }
 
-        await GetUserMainQuestionService(res.locals.uid);
+        const result = await myProfileService.GetUserMainQuestion(res.locals.uid);
 
-        return res.json(response(status.SUCCESS));
+        return res.json(response(status.SUCCESS,result));
     }catch(err){
         if(err.message == 'DATA_NOT_FOUND'){
             return res.status(404).json(response(status.MYPROFILE_GET_ERROR));
@@ -26,12 +30,16 @@ export async function SaveMainQuestion(req, res) {
             return res.status(409).json(response(status.EMPTY_RES_LOCALS_UID));
         }
 
-        const {data,caseNum} = req.body;
-        if(!data||!caseNum){
-            return res.status(400).json(response(status.MYPROFILE_DATA_NOT_FOUND));
+        const {error, value} = saveMainQuestionSchema.valid(req.body);
+        if (error) {
+            const errorMessages = error.details.map(detail => detail.message);
+            return res.status(400).json(response(status.MYPROFILE_DATA_NOT_FOUND, errorMessages));
         }
 
-        await SaveMainQuestionService(res.locals.uid,data,caseNum);
+        const saveMainQuestionDTO = new SaveMainQuestionDTO(value);
+        
+        await myProfileService.SaveMainQuestion(res.locals.uid,saveMainQuestionDTO);
+
         return res.json(response(status.SUCCESS));
     }catch(err){
         console.log("myprofile/SaveMainQuestion error:",err);
@@ -45,13 +53,15 @@ export async function GetMainQuestion(req, res) {
             return res.status(409).json(response(status.EMPTY_RES_LOCALS_UID));
         }
 
-        const { caseNum } = req.params;
-        if(!caseNum){
-            return res.status(400).json(response(status.MYPROFILE_EMPTY_DATA));
+        const {error,value} = getMainQuestionSchema.valid(req.params);
+        if (error) {
+            const errorMessages = error.details.map(detail => detail.message);
+            return res.status(400).json(response(status.MYPROFILE_EMPTY_DATA, errorMessages));
         }
+        const getMainQuestionDTO = new GetMainQuestionDTO(value);
 
-        const result = await GetMainQuestionService(caseNum);
-        return res.json(response(status.SUCCESS,result));
+        const result = await myProfileService.GetMainQuestion(getMainQuestionDTO);
+        return res.json(response(status.SUCCESS,result.caseNum));
     }catch(err){
         if(err.message == 'DATA_NOT_FOUND'){
             return res.status(404).json(response(status.MYPROFILE_DATA_NOT_FOUND));

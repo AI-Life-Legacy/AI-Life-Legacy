@@ -1,4 +1,4 @@
-import { GetMainQuestionResposne } from "../dto/myprofile.dto.js";
+import { GetMainQuestionResposne, GetUserMainQuestionResponse } from "../dto/myprofile.dto.js";
 import { SaveMainQuestionEntity } from "../entity/myprofile.entity.js";
 import { MyProfileRepository } from "../repository/myprofile.repositroy.js";
 
@@ -12,7 +12,7 @@ export class MyProfileService {
             if(!result){
                 throw new Error('DATA_NOT_FOUND');
             }
-            return result;
+            return new GetUserMainQuestionResponse(result);
         } catch (err) {
             console.error("myprofile/GetUserMainQuestion error: ",err);
             throw err;

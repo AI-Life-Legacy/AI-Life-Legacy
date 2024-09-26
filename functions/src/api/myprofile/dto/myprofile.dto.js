@@ -16,3 +16,9 @@ export class GetMainQuestionResposne {
         this.caseNum = caseNum;
     }
 }
+
+export class GetUserMainQuestionResponse { 
+    constructor (data) {
+        this.data = data;
+    }
+}

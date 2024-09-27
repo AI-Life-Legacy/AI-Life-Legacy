@@ -1,6 +1,7 @@
 import { response } from "../../../utils/response/response.js";
 import { status } from "../../../utils/response/response.status.js";
-import { patchDataDTO, questionIdDTO, writeDataDTO } from "../dto/write.dto.js";
+import { checkAnswerPageSchema, getWriteDataSchema, patchWriteDataSchema, saveDataSchema } from "../../../vaild/write.vaild.js";
+import { CheckAnswerPageDTO, GetWriteDataDTO, PatchWriteDataDTO, SaveDataDTO } from "../dto/write.dto.js";
 import { CheckAnswerPageDataService, SaveAnswerDataService, CheckAnswerDataService, GetWriteDataService, PatchWriteDataService, CheckPageDataService} from "../service/write.service.js";
 
 export async function SaveAnswerData(req,res){
@@ -9,13 +10,14 @@ export async function SaveAnswerData(req,res){
             return res.status(409).json(response(status.EMPTY_RES_LOCALS_UID));
         }
 
-        const {writeData, error} = writeDataDTO(req.body);
+        const {error, value} = saveDataSchema.validate(req.body);
         if(error){
             const errorMessages = error.details.map(detail => detail.message);
             return res.status(400).json(response(status.AUTOBIOGRAPHY_DATA_NOT_FOUND,errorMessages));
         }
 
-        await SaveAnswerDataService(res.locals.uid,writeData);
+        const saveDataDTO = new SaveDataDTO(value);
+        await SaveAnswerDataService(res.locals.uid,saveDataDTO);
 
         return res.json(response(status.SUCCESS));
     }catch(err){
@@ -51,13 +53,14 @@ export async function GetWriteData(req,res){
             return res.status(409).json(response(status.EMPTY_RES_LOCALS_UID));
         }
 
-        const {questionIdData, error} = questionIdDTO(req.params);
+        const {error,value} = getWriteDataSchema.validate(req.params);
         if(error){
             const errorMessages = error.details.map(detail => detail.message);
             return res.status(400).json(response(status.AUTOBIOGRAPHY_EMPTY_QUERY_DATA,errorMessages));
         }
 
-        const result = await GetWriteDataService(res.locals.uid,questionIdData);
+        const getWriteDataDTO = new GetWriteDataDTO(value);
+        const result = await GetWriteDataService(res.locals.uid,getWriteDataDTO);
         
         return res.json(response(status.SUCCESS,result));
     }catch(err){
@@ -75,13 +78,14 @@ export async function PatchWriteData(req,res){
             return res.status(409).json(response(status.EMPTY_RES_LOCALS_UID));
         }
 
-        const {patchData, error} = patchDataDTO(req.body);
+        const {error,value} = patchWriteDataSchema.validate(req.body);
         if(error){
             const errorMessages = error.details.map(detail => detail.message);
             return res.status(400).json(response(status.EMPTY_REQUEST_BODY,errorMessages));
         }
 
-        await PatchWriteDataService(res.locals.uid,patchData);
+        const patchWriteDataDTO = new PatchWriteDataDTO(value);
+        await PatchWriteDataService(res.locals.uid,patchWriteDataDTO);
 
         return res.json(response(status.SUCCESS));
     }catch(err){
@@ -99,12 +103,15 @@ export async function CheckAnswerPageData(req,res){
             return res.status(409).json(response(status.EMPTY_RES_LOCALS_UID));
         }
 
-        const mainId = req.params.mainQuestionId;
-        if(!mainId){
-            return res.status(400).json(response(status.AUTOBIOGRAPHY_EMPTY_REQUEST_DATA));
+        const {error,value} = checkAnswerPageSchema.validate(req.params);
+        if(error){
+            const errorMessages = error.details.map(detail => detail.message);
+            return res.status(400).json(response(status.AUTOBIOGRAPHY_EMPTY_REQUEST_DATA),errorMessages);
         }
 
-        await CheckAnswerPageDataService(res.locals.uid,mainId);
+        const checkAnswerPageDTO = new CheckAnswerPageDTO(value);
+
+        await CheckAnswerPageDataService(res.locals.uid,checkAnswerPageDTO);
 
         return res.json(response(status.SUCCESS));
     }catch(err){

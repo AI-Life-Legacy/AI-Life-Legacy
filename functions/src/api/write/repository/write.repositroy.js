@@ -1,10 +1,10 @@
 import { db } from "../../../../config/firebase.config.js";
 
-export async function SaveAnswerDataRepository(uid, writeData){
+export async function SaveAnswerDataRepository(uid, saveDataDTO){
     try{
-        await db.collection("답변").doc(uid).collection(writeData.mainQuestionId.toString()).doc(writeData.subQuestionId.toString()).set({
-            answer: writeData.data,
-            question: writeData.question,
+        await db.collection("답변").doc(uid).collection(saveDataDTO.mainQuestionId.toString()).doc(saveDataDTO.subQuestionId.toString()).set({
+            answer: saveDataDTO.data,
+            question: saveDataDTO.question,
         });
     }catch(err){
         console.error("write/SaveAnswerDataRepository error: ",err);
@@ -24,9 +24,9 @@ export async function CheckAnswerDataRepository(uid){
     }
 }
 
-export async function GetWriteDataRepository(uid,questionIdData){
+export async function GetWriteDataRepository(uid,getWriteDataDTO){
     try{
-        const mainCollectionRef = await db.collection('답변').doc(uid).collection(questionIdData.mainId.toString()).doc(questionIdData.subId.toString()).get();
+        const mainCollectionRef = await db.collection('답변').doc(uid).collection(getWriteDataDTO.mainId.toString()).doc(getWriteDataDTO.subId.toString()).get();
         const result = mainCollectionRef.data();
         if(!result){
             throw new Error('DATA_NOT_FOUND');
@@ -39,10 +39,10 @@ export async function GetWriteDataRepository(uid,questionIdData){
 
 }
 
-export async function PatchWriteDataRepository(uid,patchData){
+export async function PatchWriteDataRepository(uid,patchWriteDataDTO){
     try{
-        await db.collection('답변').doc(uid).collection(patchData.mainId.toString()).doc(patchData.subId.toString()).update({
-            answer:patchData.data,
+        await db.collection('답변').doc(uid).collection(patchWriteDataDTO.mainId.toString()).doc(patchWriteDataDTO.subId.toString()).update({
+            answer:patchWriteDataDTO.data,
         });
     }catch(err){
         console.error("write/PatchWriteDataRepository error: ",err);
@@ -66,9 +66,9 @@ export async function GetAnswerDataRepository(uid,mainQuestionId){
 
 }
 
-export async function CheckAnswerPageDataRepository(uid,mainId){
+export async function CheckAnswerPageDataRepository(uid,checkAnswerPageDTO){
     try{
-        const isExist = await db.collection("답변").doc(uid).collection(mainId.toString()).doc('5').get();
+        const isExist = await db.collection("답변").doc(uid).collection(checkAnswerPageDTO.mainQuestionId.toString()).doc('5').get();
         if(!isExist.exists){
             throw new Error('DATA_NOT_FOUND');
         }

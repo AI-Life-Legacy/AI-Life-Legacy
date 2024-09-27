@@ -1,8 +1,8 @@
 import { CheckAnswerDataRepository, CheckAnswerPageDataRepository, CheckPageDataRepository, GetWriteDataRepository, PatchWriteDataRepository, SaveAnswerDataRepository  } from "../repository/write.repositroy.js";
 
-export async function SaveAnswerDataService(uid, writeData) {
+export async function SaveAnswerDataService(uid, saveDataDTO) {
     try {
-        await SaveAnswerDataRepository(uid, writeData);
+        await SaveAnswerDataRepository(uid, saveDataDTO);
     } catch (err) {
         console.error(err);
         throw new Error('SAVE_DATA_ERR');
@@ -21,9 +21,9 @@ export async function CheckAnswerDataService(uid) {
     }
 }
 
-export async function GetWriteDataService(uid,questionIdData) {
+export async function GetWriteDataService(uid,getWriteDataDTO) {
     try {
-        return await GetWriteDataRepository(uid,questionIdData);
+        return await GetWriteDataRepository(uid,getWriteDataDTO);
     } catch (err) {
         if(err.message == 'DATA_NOT_FOUND'){
             throw new Error('DATA_NOT_FOUND');
@@ -33,18 +33,18 @@ export async function GetWriteDataService(uid,questionIdData) {
     }    
 }
 
-export async function PatchWriteDataService(uid,patchData) {
+export async function PatchWriteDataService(uid,patchWriteDataDTO) {
     try {
-        await PatchWriteDataRepository(uid,patchData);
+        await PatchWriteDataRepository(uid,patchWriteDataDTO);
     } catch (err) {
         console.error(err);
         throw new Error('PATCH_DATA_ERR');
     }    
 }
 
-export async function CheckAnswerPageDataService(uid,mainId) {
+export async function CheckAnswerPageDataService(uid,checkAnswerPageDTO) {
     try{
-        await CheckAnswerPageDataRepository(uid,mainId)     
+        await CheckAnswerPageDataRepository(uid,checkAnswerPageDTO)     
     }catch(err){
         if(err.message == 'DATA_NOT_FOUND'){
             throw new Error('DATA_NOT_FOUND');

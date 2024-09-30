@@ -8,7 +8,7 @@ export class SaveWriteDataDTO {
 }
 
 export class GetWriteDataDTO {
-    constructor({ mainId, subId}){
+    constructor({ mainId, subId }){
         this.mainId = mainId;
         this.subId = subId;
     }
@@ -23,6 +23,14 @@ export class PatchWriteDataDTO {
 }
 
 export class CheckAnswerDataDTO {
+    constructor ({ mainId, subId, data}){
+        this.mainId = mainId;
+        this.subId = subId;
+        this.data = data;
+    }
+}
+
+export class CheckAnswerPageDTO {
     constructor ({ mainQuestionId }){
         this.mainQuestionId = mainQuestionId;
     }

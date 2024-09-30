@@ -1,5 +1,6 @@
 import Joi from "joi";
 
+
 export const saveWriteDataSchema = Joi.object({
     data: Joi.string().required().messages({
         'any.required': '사용자 답변이 필요합니다.'
@@ -37,6 +38,12 @@ export const patchWriteDataSchema = Joi.object({
 })
 
 export const checkAnswerDataSchema = Joi.object({
+    data: Joi.string().required().messages({
+        'any.required': '사용자 답변이 필요합니다.'
+    }),
+})
+
+export const checkAnswerPageSchema = Joi.object({
     mainQuestionId: Joi.string().required().messages({
         'any.required': '목차 번호가 필요합니다.'
     })

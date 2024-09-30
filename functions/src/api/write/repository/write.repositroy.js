@@ -22,9 +22,13 @@ export async function CheckAnswerDataRepository(uid){
 }
 
 export async function GetWriteDataRepository(uid,getWriteDataDTO){
-    try{
+    try
         const mainCollectionRef = await db.collection('답변').doc(uid).collection(getWriteDataDTO.mainId.toString()).doc(getWriteDataDTO.subId.toString()).get(); 
         return mainCollectionRef.data();
+        if(!result){
+            throw new Error('DATA_NOT_FOUND');
+        }
+        return result;
     }catch(err){
         console.error("write/GetWriteDataRepository error: ",err);
         throw err;

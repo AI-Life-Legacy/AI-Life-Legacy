@@ -23,6 +23,7 @@ export async function CheckAnswerDataService(uid) {
 
 export async function GetWriteDataService(uid,getWriteDataDTO) {
     try {
+
         const result = await GetWriteDataRepository(uid,getWriteDataDTO);
         if(!result){
             throw new Error('DATA_NOT_FOUND');

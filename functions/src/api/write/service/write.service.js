@@ -1,44 +1,55 @@
 import { CheckAnswerDataRepository, CheckAnswerPageDataRepository, CheckPageDataRepository, GetWriteDataRepository, PatchWriteDataRepository, SaveAnswerDataRepository  } from "../repository/write.repositroy.js";
 
-export async function GetWriteDataService(uid,mainId,subId) {
+export async function SaveAnswerDataService(uid, saveDataDTO) {
     try {
-        return await GetWriteDataRepository(uid,mainId,subId);
+        await SaveAnswerDataRepository(uid, saveDataDTO);
     } catch (err) {
         console.error(err);
-        return false;
-    }    
-}
-
-export async function PatchWriteDataService(uid,mainId,subId,data) {
-    try {
-        return await PatchWriteDataRepository(uid,mainId,subId,data);
-    } catch (err) {
-        console.error(err);
-        return false;
-    }    
-}
-
-export async function SaveAnswerDataService(uid, data, mainQuestionId,subQuestionId,question) {
-    try {
-        return await SaveAnswerDataRepository(uid, data, mainQuestionId,subQuestionId,question);
-    } catch (err) {
-        console.error(err);
-        return false;
+        throw new Error('SAVE_DATA_ERR');
     }
 }
 
 export async function CheckAnswerDataService(uid) {
     try {
-        return await CheckAnswerDataRepository(uid);
+        const result = await CheckAnswerDataRepository(uid);
+        if(!result.exists){
+            throw new Error('GET_DATA_ERR');
+        }
     } catch (err) {
         console.error(err);
-        return false;
+        throw err;
     }
 }
 
-export async function CheckAnswerPageDataService(uid,mainId) {
+export async function GetWriteDataService(uid,getWriteDataDTO) {
+    try {
+
+        const result = await GetWriteDataRepository(uid,getWriteDataDTO);
+        if(!result){
+            throw new Error('DATA_NOT_FOUND');
+        }
+        return result;
+    } catch (err) {
+        console.error(err);
+        return false;
+    }    
+}
+
+export async function PatchWriteDataService(uid,patchWriteDataDTO) {
+    try {
+        await PatchWriteDataRepository(uid,patchWriteDataDTO);
+    } catch (err) {
+        console.error(err);
+        throw new Error('PATCH_DATA_ERR');
+    }    
+}
+
+export async function CheckAnswerPageDataService(uid,checkAnswerDataDTO) {
     try{
-        return await CheckAnswerPageDataRepository(uid,mainId)     
+        const result = await CheckAnswerPageDataRepository(uid,checkAnswerDataDTO);
+        if(!result.exists){
+            throw new Error('DATA_NOT_FOUND');
+        }     
     }catch(err){
         console.error(err);
         return false;
@@ -47,9 +58,13 @@ export async function CheckAnswerPageDataService(uid,mainId) {
 
 export async function CheckPageDataService(uid) {
     try{
-        return await CheckPageDataRepository(uid)     
+        const result = await CheckPageDataRepository(uid);
+        if (result === null) {
+            throw new Error('DATA_NOT_FOUND'); // 데이터를 찾지 못한 경우 에러 처리
+        }
+        return result;
     }catch(err){
         console.error(err);
-        return false;
+        throw err;
     }
 }

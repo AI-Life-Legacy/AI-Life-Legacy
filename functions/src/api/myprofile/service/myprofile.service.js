@@ -1,26 +1,43 @@
-import { GetMainQuestionRepository, GetUserMainQuestionRepository, SaveMainQuestionRepository } from "../repository/myprofile.repositroy.js";
+import { GetMainQuestionResposne, GetUserMainQuestionResponse } from "../dto/myprofile.dto.js";
+import { SaveMainQuestionEntity } from "../entity/myprofile.entity.js";
+import { MyProfileRepository } from "../repository/myprofile.repositroy.js";
 
-export async function SaveMainQuestionService(uid,data,caseNum) {
-    try {
-        return await SaveMainQuestionRepository(uid,data,caseNum);
-    } catch (err) {
-        console.error(err);
-        return false;
+export class MyProfileService {
+    constructor () {
+        this.myProfileRepository = new MyProfileRepository;
     }
-}
-export async function GetMainQuestionService(caseNum) {
-    try {
-        return await GetMainQuestionRepository(caseNum);
-    } catch (err) {
-        console.error(err);
-        return false;
+    async GetUserMainQuestion(uid) {
+        try {
+            const result = await this.myProfileRepository.GetUserMainQuestion(uid);
+            if(!result){
+                throw new Error('DATA_NOT_FOUND');
+            }
+            return new GetUserMainQuestionResponse(result);
+        } catch (err) {
+            console.error("myprofile/GetUserMainQuestion error: ",err);
+            throw err;
+        }
     }
-}
-export async function GetUserMainQuestionService(uid) {
-    try {
-        return await GetUserMainQuestionRepository(uid);
-    } catch (err) {
-        console.error(err);
-        return false;
+    async SaveMainQuestion(uid,saveMainQuestionDTO) {
+        try {
+            await this.myProfileRepository.SaveMainQuestion(uid,saveMainQuestionDTO);
+        } catch (err) {
+            console.error("myprofile/SaveMainQuestion error: ",err);
+            throw err;
+        }
     }
+    
+    async GetMainQuestion(getMainQuestionDTO) {
+        try {
+            const result = await this.myProfileRepository.GetMainQuestion(getMainQuestionDTO);
+            if(!result){
+                throw new Error('DATA_NOT_FOUND');
+            }
+            return new GetMainQuestionResposne(result);
+        } catch (err) {
+            console.error("myprofile/GetMainQuestion error: ",err);
+            throw err;
+        }
+    }
+
 }

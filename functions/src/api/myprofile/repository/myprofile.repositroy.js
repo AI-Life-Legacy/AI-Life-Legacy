@@ -1,41 +1,39 @@
 import { db } from "../../../../config/firebase.config.js";
-export async function SaveMainQuestionRepository(uid,data,caseNum){
-    try{
-        await db.collection("대질문").doc(uid).set({
-            data
-        });
-        await db.collection("유저").doc(uid).update({
-            userCase: caseNum
-        });
-        return true;
-    }catch(err){
-        console.error("myprofile/SaveMainQuestionRepository error: ",err);
-        return false;
-    }
-}
 
-export async function GetMainQuestionRepository(caseNum) {
-    try {
-        const data =(await db.collection("대질문").doc(caseNum).get()).data();
-        if(!data){
-            return false;
+export class MyProfileRepository {
+    async GetUserMainQuestion(uid) {
+        try {
+            return (await db.collection("대질문").doc(uid).get()).data();
+        } catch (err) {
+            console.error("myprofile/GetUserMainQuestion error:",err);
+            throw err;
         }
-        return data;
-    } catch (err) {
-        console.error("myprofile/GetMainQuestionRepository error: ",err);
-        return false;
     }
-}
-
-export async function GetUserMainQuestionRepository(uid) {
-    try {
-        const data =(await db.collection("대질문").doc(uid).get()).data();
-        if(!data){
-            return false;
+    async SaveMainQuestion(uid,saveMainQuestionDTO){
+        try {
+            await db.runTransaction(async (transaction) => {
+                const mainQuestionRef = db.collection("대질문").doc(uid);
+                const userRef = db.collection("유저").doc(uid);
+    
+                transaction.set(mainQuestionRef, {
+                    data: saveMainQuestionDTO.data,
+                });
+                transaction.update(userRef, {
+                    userCase: saveMainQuestionDTO.userCase,
+                });
+            });
+        } catch (err) {
+            console.error("myprofile/SaveMainQuestion error: ", err);
+            throw err;
         }
-        return data;
-    } catch (err) {
-        console.error("myprofile/GetUserMainQuestionRepository error:",err);
-        return false;
+    }
+    
+    async GetMainQuestion(getMainQuestionDTO) {
+        try {
+            return (await db.collection("대질문").doc(getMainQuestionDTO.caseNum).get()).data() ?? null;
+        } catch (err) {
+            console.error("myprofile/GetMainQuestion error: ",err);
+            throw err;
+        }
     }
 }

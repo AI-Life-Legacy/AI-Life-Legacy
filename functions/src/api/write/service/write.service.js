@@ -11,11 +11,11 @@ export async function SaveAnswerDataService(uid, saveDataDTO) {
 
 export async function CheckAnswerDataService(uid) {
     try {
-        await CheckAnswerDataRepository(uid);
-    } catch (err) {
-        if(err.message == 'GET_DATA_ERR'){
+        const result = await CheckAnswerDataRepository(uid);
+        if(!result.exists){
             throw new Error('GET_DATA_ERR');
         }
+    } catch (err) {
         console.error(err);
         throw err;
     }
@@ -23,11 +23,13 @@ export async function CheckAnswerDataService(uid) {
 
 export async function GetWriteDataService(uid,getWriteDataDTO) {
     try {
-        return await GetWriteDataRepository(uid,getWriteDataDTO);
-    } catch (err) {
-        if(err.message == 'DATA_NOT_FOUND'){
+
+        const result = await GetWriteDataRepository(uid,getWriteDataDTO);
+        if(!result){
             throw new Error('DATA_NOT_FOUND');
         }
+        return result;
+    } catch (err) {
         console.error(err);
         return false;
     }    
@@ -42,13 +44,13 @@ export async function PatchWriteDataService(uid,patchWriteDataDTO) {
     }    
 }
 
-export async function CheckAnswerPageDataService(uid,checkAnswerPageDTO) {
+export async function CheckAnswerPageDataService(uid,checkAnswerDataDTO) {
     try{
-        await CheckAnswerPageDataRepository(uid,checkAnswerPageDTO)     
-    }catch(err){
-        if(err.message == 'DATA_NOT_FOUND'){
+        const result = await CheckAnswerPageDataRepository(uid,checkAnswerDataDTO);
+        if(!result.exists){
             throw new Error('DATA_NOT_FOUND');
-        }
+        }     
+    }catch(err){
         console.error(err);
         return false;
     }

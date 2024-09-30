@@ -14,10 +14,7 @@ export async function SaveAnswerDataRepository(uid, saveDataDTO){
 
 export async function CheckAnswerDataRepository(uid){
     try{
-        const isExist = await db.collection("답변").doc(uid).collection("1").doc("1").get();
-        if(!isExist.exists){
-            throw new Error('GET_DATA_ERR');
-        }
+        return await db.collection("답변").doc(uid).collection("1").doc("1").get();
     }catch(err){
         console.error("write/CheckAnswerDataRepository error: ",err);
         throw err;
@@ -25,9 +22,9 @@ export async function CheckAnswerDataRepository(uid){
 }
 
 export async function GetWriteDataRepository(uid,getWriteDataDTO){
-    try{
-        const mainCollectionRef = await db.collection('답변').doc(uid).collection(getWriteDataDTO.mainId.toString()).doc(getWriteDataDTO.subId.toString()).get();
-        const result = mainCollectionRef.data();
+    try
+        const mainCollectionRef = await db.collection('답변').doc(uid).collection(getWriteDataDTO.mainId.toString()).doc(getWriteDataDTO.subId.toString()).get(); 
+        return mainCollectionRef.data();
         if(!result){
             throw new Error('DATA_NOT_FOUND');
         }
@@ -51,27 +48,9 @@ export async function PatchWriteDataRepository(uid,patchWriteDataDTO){
 
 }
 
-export async function GetAnswerDataRepository(uid,mainQuestionId){
+export async function CheckAnswerPageDataRepository(uid,checkAnswerDataDTO){
     try{
-        const mainCollectionRef = db.collection('답변').doc(uid).collection(mainQuestionId.toString());
-        const result = await mainCollectionRef.get();
-        if(!result){
-            return false;
-        }
-        return result;
-    }catch(err){
-        console.error("write/GetAnswerData error: ",err);
-        return false;
-    }
-
-}
-
-export async function CheckAnswerPageDataRepository(uid,checkAnswerPageDTO){
-    try{
-        const isExist = await db.collection("답변").doc(uid).collection(checkAnswerPageDTO.mainQuestionId.toString()).doc('5').get();
-        if(!isExist.exists){
-            throw new Error('DATA_NOT_FOUND');
-        }
+        return await db.collection("답변").doc(uid).collection(checkAnswerDataDTO.mainId.toString()).doc('5').get();
     }catch(err){
         console.error("write/CheckAnswerPageDataRepository error: ",err);
         throw err;

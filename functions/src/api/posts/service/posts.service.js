@@ -1,4 +1,4 @@
-import { PostsRepository } from "../repository/posts.repositroy";
+import { PostsRepository } from "../repository/posts.repositroy.js";
 
 export class PostsService {
     constructor () {

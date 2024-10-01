@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('content').style.display = 'none';
 
     try {
-        const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/user/logincheck`,{
+        const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/auth/status`,{
             method: 'GET',
             credentials:'include',
         });

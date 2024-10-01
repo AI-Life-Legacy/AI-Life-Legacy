@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
    // 로그인 및 자서전 제출 확인    
     try {
-        const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/user/logincheck`,{
+        const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/auth/status`,{
             method: 'GET',
             credentials:'include',
         });

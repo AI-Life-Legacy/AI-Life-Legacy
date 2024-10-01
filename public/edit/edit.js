@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const prevButton = document.getElementById('prevButton');
     const questionTitle = document.querySelector('h1 strong');
 
-    const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/user/logincheck`,{
+    const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/auth/status`,{
         method: 'GET',
         credentials:'include',
     });

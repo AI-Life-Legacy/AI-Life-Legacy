@@ -18,7 +18,7 @@ const loginUser = async (email, password) => {
       const user = userCredential.user;
       const token = await user.getIdToken();
       // 로그인 토큰 쿠키 발행
-      const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/user/login`,{
+      const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/auth/login`,{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

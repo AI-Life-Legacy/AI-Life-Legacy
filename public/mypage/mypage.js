@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const loadingMessage = document.getElementById('loading-message');
 
     try {
-        const apiResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/user/case`, {
+        const apiResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/users/cases`, {
             method: 'GET',
             credentials: 'include'
         });

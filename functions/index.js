@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true })); // URL-encoded 요청을 처리
 
 app.use("/users",commonApiLimiter,LoginCheckMiddleWares,userRouter);
 app.use("/auth",commonApiLimiter,authRouter);
-app.use("/myprofile",commonApiLimiter,LoginCheckMiddleWares,myprofileRouter);
+app.use("/profile/me",commonApiLimiter,LoginCheckMiddleWares,myprofileRouter);
 app.use("/write",commonApiLimiter,LoginCheckMiddleWares, writeRouter);
 app.use("/chatGpt",chatGPTApiLimiter,LoginCheckMiddleWares, chatGptRouter);
 

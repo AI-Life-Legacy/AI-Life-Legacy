@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.location.href = "/login";
         }
 
-        const existMyprofileResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/myprofile`,{
+        const existMyprofileResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/profile/me/main-questione`,{
             method: 'GET',
             credentials: 'include',
         });

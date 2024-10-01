@@ -25,7 +25,7 @@ app.use(express.json()); // JSON 요청을 처리할 수 있도록 설정
 app.use(express.urlencoded({ extended: true })); // URL-encoded 요청을 처리할 수 있도록 설정
 
 
-app.use("/users",commonApiLimiter,userRouter);
+app.use("/users",commonApiLimiter,LoginCheckMiddleWares,userRouter);
 app.use("/auth",commonApiLimiter,authRouter);
 app.use("/myprofile",commonApiLimiter,LoginCheckMiddleWares,myprofileRouter);
 app.use("/write",commonApiLimiter,LoginCheckMiddleWares, writeRouter);

@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const isExistMPData = await existMyprofileResponse.json();
         if(isExistMPData.code === "200"){ // 있는 경우
-            window.location.href = "/write/1";
+            window.location.href = "/posts/1";
         }else{ // 없는 경우
             document.getElementById('loading').style.display = 'none';
             document.getElementById('content').style.display = 'flex';

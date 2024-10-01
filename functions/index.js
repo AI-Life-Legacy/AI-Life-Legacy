@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 // 사용자 정의 모듈 불러오기 
 import { initApp,auth } from './config/firebase.config.js'
 import { chatGptRouter } from './src/route/chatgpt.route.js';
-import { writeRouter } from './src/route/write.route.js';
+import { postsRouter } from './src/route/posts.route.js';
 import { myprofileRouter } from './src/route/myprofile.route.js';
 import { userRouter } from './src/route/user.route.js';
 import { LoginCheckMiddleWares } from './src/middlewares/logincheck.middlewares.js';
@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: true })); // URL-encoded 요청을 처리
 app.use("/users",commonApiLimiter,LoginCheckMiddleWares,userRouter);
 app.use("/auth",commonApiLimiter,authRouter);
 app.use("/profile/me",commonApiLimiter,LoginCheckMiddleWares,myprofileRouter);
-app.use("/write",commonApiLimiter,LoginCheckMiddleWares, writeRouter);
+app.use("/posts",commonApiLimiter,LoginCheckMiddleWares, postsRouter);
 app.use("/chatGpt",chatGPTApiLimiter,LoginCheckMiddleWares, chatGptRouter);
 
 export const api = functions.region("asia-northeast3").https.onRequest(app);

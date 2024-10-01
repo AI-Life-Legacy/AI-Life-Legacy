@@ -154,7 +154,7 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
                 if (window.speechSynthesis.speaking) {
                     window.speechSynthesis.cancel(); // Cancel speech synthesis before redirecting
                 }
-                window.location.href = '/write/1'; // Redirect to write page
+                window.location.href = '/posts/1'; // Redirect to write page
             });
 
             responseMessages.appendChild(yesButton);

@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.location.href = "/login";
         }
 
-        const apiResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/write/check`, {
+        const apiResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/posts/check`, {
             method: 'GET',
             credentials:'include',
         });

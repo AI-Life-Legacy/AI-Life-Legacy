@@ -6,8 +6,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         credentials:'include',
     });
     const logincheckResult = await logincheckResponse.json();
-    console.log(logincheckResult);
-    
     if (logincheckResult.code == "200") {
         loginContainer.innerHTML = `
             <a href="/logout">

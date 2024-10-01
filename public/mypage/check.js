@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             credentials:'include',
         });
         const result = await apiResponse.json();
-        console.log(result);
         if(result.code === "201"){ // 작성한 데이터 없음
             alert("자서전을 먼저 작성해주세요!");
             window.location.href = "/myprofile";

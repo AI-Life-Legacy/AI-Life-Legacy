@@ -96,7 +96,7 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
             const caseNum = result.result.data; // Store the case number
 
             // Make a GET request to retrieve profile data using the case number
-            const apiResponse2 = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/myprofile/${caseNum}`, {
+            const apiResponse2 = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/profile/me/main-questione/${caseNum}`, {
                 method: 'GET',
                 credentials: 'include',
             });
@@ -132,7 +132,7 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
             });
 
             // Make a POST request to save the profile data
-            await fetch('https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/myprofile/save', {
+            await fetch('https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/profile/me/main-questione', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -154,7 +154,7 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
                 if (window.speechSynthesis.speaking) {
                     window.speechSynthesis.cancel(); // Cancel speech synthesis before redirecting
                 }
-                window.location.href = '/write/1'; // Redirect to write page
+                window.location.href = '/posts/1'; // Redirect to write page
             });
 
             responseMessages.appendChild(yesButton);

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const prevButton = document.getElementById('prevButton');
     const questionTitle = document.querySelector('h1 strong');
 
-    const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/user/logincheck`,{
+    const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/auth/status`,{
         method: 'GET',
         credentials:'include',
     });
@@ -21,12 +21,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     const subId = urlParts[3];
     console.log(mainId,subId);
     try {
-        // const apiResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/write/${mainId}/${subId}`, {
+        // const apiResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/posts/${mainId}/${subId}`, {
         //     method: 'GET',
         //     credentials: 'include',
         // });
 
-        const apiResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/write/${1}/${1}`, {
+        const apiResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/posts/${1}/${1}`, {
             method: 'GET',
             credentials: 'include',
         });
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     function saveUserAnswer(updatedAnswer, mainId, subId) {
         // 서버 API로 데이터 전송
-        fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/write`, {
+        fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/posts`, {
             method: 'PATCH',  // 수정된 데이터를 전송할 때 PATCH 사용
             headers: {
                 'Content-Type': 'application/json',

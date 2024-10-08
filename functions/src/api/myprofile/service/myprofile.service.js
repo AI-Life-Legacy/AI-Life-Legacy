@@ -1,5 +1,4 @@
 import { GetMainQuestionResposne, GetUserMainQuestionResponse } from "../dto/myprofile.dto.js";
-import { SaveMainQuestionEntity } from "../entity/myprofile.entity.js";
 import { MyProfileRepository } from "../repository/myprofile.repositroy.js";
 
 export class MyProfileService {

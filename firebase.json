@@ -44,44 +44,44 @@
         "destination": "/myprofile/myprofile.html"
       },
       {
-        "source": "/write/1",
-        "destination": "/write1/write.html"
+        "source": "/posts/1",
+        "destination": "/posts1/posts.html"
       },
       {
-        "source": "/write/2",
-        "destination": "/write2/write.html"
+        "source": "/posts/2",
+        "destination": "/posts2/posts.html"
       },
       {
-        "source": "/write/3",
-        "destination": "/write3/write.html"
+        "source": "/posts/3",
+        "destination": "/posts3/posts.html"
       },
       {
-        "source": "/write/4",
-        "destination": "/write4/write.html"
+        "source": "/posts/4",
+        "destination": "/posts4/posts.html"
       },
       {
-        "source": "/write/5",
-        "destination": "/write5/write.html"
+        "source": "/posts/5",
+        "destination": "/posts5/posts.html"
       },
       {
-        "source": "/write/6",
-        "destination": "/write6/write.html"
+        "source": "/posts/6",
+        "destination": "/posts6/posts.html"
       },
       {
-        "source": "/write/7",
-        "destination": "/write7/write.html"
+        "source": "/posts/7",
+        "destination": "/posts7/posts.html"
       },
       {
-        "source": "/write/8",
-        "destination": "/write8/write.html"
+        "source": "/posts/8",
+        "destination": "/posts8/posts.html"
       },
       {
-        "source": "/write/9",
-        "destination": "/write9/write.html"
+        "source": "/posts/9",
+        "destination": "/posts9/posts.html"
       },
       {
-        "source": "/write/10",
-        "destination": "/write10/write.html"
+        "source": "/posts/10",
+        "destination": "/posts10/posts.html"
       },
       {
         "source": "/finish",

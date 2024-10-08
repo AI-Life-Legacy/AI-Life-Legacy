@@ -1,13 +1,11 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const loginContainer = document.getElementById('login-container');
 
-    const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/user/logincheck`,{
+    const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/auth/status`,{
         method: 'GET',
         credentials:'include',
     });
     const logincheckResult = await logincheckResponse.json();
-    console.log(logincheckResult);
-    
     if (logincheckResult.code == "200") {
         loginContainer.innerHTML = `
             <a href="/logout">

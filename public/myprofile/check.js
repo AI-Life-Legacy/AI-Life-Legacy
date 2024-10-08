@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('loading').style.display = 'flex';
     document.getElementById('content').style.display = 'none';
     try {
-        const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/user/logincheck`,{
+        const logincheckResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/auth/status`,{
             method: 'GET',
             credentials:'include',
         });
@@ -13,14 +13,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.location.href = "/login";
         }
 
-        const existMyprofileResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/myprofile`,{
+        const existMyprofileResponse = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/profile/me/main-questione`,{
             method: 'GET',
             credentials: 'include',
         });
 
         const isExistMPData = await existMyprofileResponse.json();
         if(isExistMPData.code === "200"){ // 있는 경우
-            window.location.href = "/write/1";
+            window.location.href = "/posts/1";
         }else{ // 없는 경우
             document.getElementById('loading').style.display = 'none';
             document.getElementById('content').style.display = 'flex';

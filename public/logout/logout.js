@@ -11,12 +11,12 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 document.addEventListener('DOMContentLoaded', async () => {
-  const logout = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/user/logout`,{
+  const logout = await fetch(`https://asia-northeast3-life-legacy-dev.cloudfunctions.net/api/auth/logout`,{
     method: 'GET',
     credentials:'include',
   });
   const logoutresult = await logout.json();
-  if(logoutresult.status == "success"){
+  if(logoutresult.code == "200"){
     await auth.signOut();
     window.location.href = "/";
   }
